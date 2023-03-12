@@ -1,1 +1,66 @@
-<p>login works!</p>
+<app-header></app-header>
+<div class="login--page">
+  <form [formGroup]="loginform" (ngSubmit)="send()">
+    <div class="login--container">
+      <div class="login--form">
+        <h2>Login</h2>
+        <div class="login--form__item" >
+          <div class="form--item">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              required
+              formControlName="email"
+             
+            />
+            <span
+              class="error"
+              *ngIf="!loginform.get('email')?.valid && loginform.get('email')?.touched"
+            >
+              <span class="error" *ngIf="loginform.get('email')!.errors!['required']"
+                >Please enter an email</span
+              >
+              <span class="error" *ngIf="loginform.get('email')!.errors!['email']"
+                >Please enter a valid emial</span
+              >
+            </span>
+          </div>
+          <div class="form--item">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              formControlName="password"
+              required
+              pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%?&])[A-Za-z\d$@$!%?&]{8,}$"
+            />
+            <span
+              class="error"
+              *ngIf="
+                !loginform.get('password')?.valid && loginform.get('password')?.touched
+              "
+              >Please enter a valid password</span
+            >
+            <div class="recovery--text">
+              Forgot Password...<span routerLink="/recovery">Recovery</span>
+            </div>
+          </div>
+        </div>
+        <button
+          class="form--btn"
+          [disabled]="!loginform.valid"
+          [ngClass]="{ invalid: !loginform.valid, valid: loginform.valid }"
+          routerLink="/home"
+        >
+          Login
+        </button>
+        <div class="login--text">
+          Do not have an account yet...<span routerLink="/register"
+            >SignUp</span
+          >
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

@@ -1,1 +1,44 @@
-<p>header works!</p>
+
+<div class="header">
+  <nav>
+    <div class="nav-left">
+      
+      
+        <div class="search">
+          <div class="ask">
+           <a  id="askpoint" routerLink="/home">ASKPOINT</a>
+          </div>
+          <div class="uliza">
+            <input type="text" placeholder="Search...">
+          <button type="search">search</button>
+          </div>
+          
+      </div>
+      
+    </div>
+    <div class="nav-right">
+     
+      <ul>
+        <li><a  routerLink="/home">Home</a></li>
+
+        <div class="dropdown">
+          <button type="submit">Profile</button>
+          <div class="dropdown-content">
+          <a href="#" routerLink="/profile">Profile</a>
+          <a href="#" routerLink="/logout">LogOut</a>
+      
+          </div>
+        </div>
+        
+        <li><button type="submit" id =login *ngIf="!auth.isLoggedIn" routerLink="/login">LogIn</button></li>
+        <li><button type="add" id="signup" *ngIf="!auth.isLoggedIn" routerLink="/register">SignUp</button></li>
+        
+     
+      </ul>
+    </div>
+    
+  </nav>
+
+</div>
+
+<router-outlet></router-outlet>

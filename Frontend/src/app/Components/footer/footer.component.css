@@ -1,0 +1,48 @@
+
+
+  
+  .footer {
+    background-color: #333;
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    height: 40%;
+
+   
+}
+img{
+    width: 30px;
+}
+.icons{
+    display: flex;
+    gap: 1rem;
+}
+
+.company,
+.support,
+.locate {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+    padding-bottom: 50px;
+    
+}
+a{
+    color: white;
+}
+a:hover{
+    color: white;
+}
+.copyright{
+    background-color: black;
+    text-align: center;
+    color: white;
+    padding: 10px;
+}
+p{
+  color: white;
+}
+h3,h4{
+  color: white;
+}

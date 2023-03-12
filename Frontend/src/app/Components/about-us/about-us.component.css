@@ -1,0 +1,51 @@
+.about--page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 80%;
+    background-color: gray;
+  }
+  
+  .about--container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 70%;
+    height: 100%;
+  }
+  .img{
+    width: 20%;
+    height: 100%;
+    margin-right: 40%;
+  }
+  .about--page__left {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    font-size: 26px;
+    font-weight: bold;
+    justify-content: center;
+    width: 50%;
+    color: white;
+  }
+  
+  
+  
+  /* @media screen and (max-width: 768px) {
+    .about--page__right {
+      display: none;
+    }
+  
+    .about--page__left {
+      width: auto;
+    }
+  }
+  
+  @media screen and (max-width: 460px) {
+    .about--page__left {
+      font-size: 16px;
+    }
+  } */

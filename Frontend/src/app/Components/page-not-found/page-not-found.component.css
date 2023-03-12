@@ -1,0 +1,70 @@
+*{
+    margin: 0px;
+    padding: 0px;
+   
+}
+.container {
+     /* margin-top: 10px;  */
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+      
+
+}
+button[type="submit"]:hover {
+    background-color: rgb(62, 182, 98);
+  }
+  
+  button[type="submit"]{
+  margin-left: 0%;
+  background-color: grey;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  }
+.error-template {
+    margin-bottom: 300px;
+    padding: 40px 15px;
+    text-align: center;
+    border: 0.1px  ;
+    background-color: whitesmoke;
+}
+
+.error-actions {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+
+.error-template h1 {
+    font-size: 50px;
+}
+
+.error-template h2 {
+    font-size: 30px;
+    margin-top: 30px;
+}
+
+.error-details {
+    font-size: 18px;
+    color: #7a7a7a;
+}
+
+@media screen and (max-width: 768px) {
+    .error-template h1 {
+        font-size: 20px;
+    }
+
+    .error-template h2 {
+        font-size: 16px;
+    }
+
+    .error-details {
+        font-size: 10px;
+    }
+}

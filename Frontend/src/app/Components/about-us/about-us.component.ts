@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-comment',
+  selector: 'app-about-us',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.css']
+  templateUrl: './about-us.component.html',
+  styleUrls: ['./about-us.component.css']
 })
-export class CommentComponent {
+export class AboutUsComponent {
 
 }

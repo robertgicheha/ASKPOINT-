@@ -3,18 +3,35 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ErrorComponent } from './error/error.component';
+import { HeaderComponent } from "./Components/header/header.component";
+import { FooterComponent } from "./Components/footer/footer.component";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HomeComponent } from "./Components/home/home.component";
+import { LoginComponent } from './Components/Auth/login/login.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
+import { RegisterComponent } from "./Components/Auth/register/register.component";
+import { AskQuestionComponent } from "./Components/Questions/ask-question/ask-question.component";
+
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ErrorComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HomeComponent,
+        HeaderComponent,
+        FooterComponent,
+        BrowserAnimationsModule,
+        LoginComponent,
+        FormsModule,
+        ReactiveFormsModule,
+        RegisterComponent,
+        AskQuestionComponent
+    ]
 })
 export class AppModule { }

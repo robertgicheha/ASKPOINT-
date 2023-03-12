@@ -1,0 +1,112 @@
+*{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+input {
+
+    width: 600px;
+    height: 40px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+}
+
+button {
+    color: white;
+    background-color: black;
+    padding: 0.5rem;
+    border: transparent;
+    border-radius: 0.5rem;
+    text-align: center;
+}
+
+button:hover {
+    background-color: rgb(77, 76, 76);
+
+}
+
+.main {
+    width: 100%;
+    height: 70vh;
+    background-color:rgb(37, 36, 36)
+}
+.img{
+    width: 100%;
+    height: 100%;
+}
+
+.askpoint {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    color: white;
+
+}
+
+.brand {
+    margin-top: 100px;
+}
+.searchIcon{
+    width: 30px;
+    margin-left: -40px;
+}
+.top {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 100px;
+    gap: 1px;
+    /* background-color: rgba(221,221,221,255) */
+
+}
+
+.top-join {
+    background-color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1rem;
+    width: 300px;
+    height: 600px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    gap: 1px;
+
+}
+
+.topask:hover {
+    opacity: 0.9;
+    box-shadow: 10px 10px 10px rgba(207, 204, 204, 0.5)
+}
+
+.ask {
+    width: auto;
+}
+
+.icons {
+    width: 70px;
+}
+.h1{
+    font-size: 50px;
+    text-align: center;
+    margin-top: 90px;
+   
+}
+p{
+    font-size: 20px;
+    
+}
+.h2{
+    text-align: center;
+    padding: 2px;
+    font-weight: lighter;
+}
+.h3 {
+    text-align: center;
+    font-weight: lighter;
+}

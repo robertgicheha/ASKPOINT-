@@ -22,6 +22,10 @@
   width: 60%;
 }
 
+span {
+    color: rgb(180, 66, 21);
+}
+
 .login--image img {
   width: 100%;
   height: 100%;
@@ -69,9 +73,11 @@
   margin-bottom: 25px;
   cursor: pointer;
 }
-
+.form--btn:hover{
+   background-color: rgb(73, 201, 190);
+}
 .login--btn:hover {
-  background-color: white;
+  background-color: rgb(73, 201, 190);
   box-shadow: 1px 1px 8px 1px rgba(16, 25, 150, 0.371) inset;
 }
 
@@ -80,10 +86,20 @@
 }
 
 .login--form span {
-  color: skyblue;
+  color: rgb(224, 131, 9);
   cursor: pointer;
 }
 
 .login--form span:hover {
   text-decoration: underline;
+}
+
+@media screen and (max-width: 767px) {
+  .login--image {
+    display: none;
+  }
+
+  .login--form {
+    width: 100%;
+  }
 }

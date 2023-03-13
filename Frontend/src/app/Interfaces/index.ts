@@ -1,10 +1,9 @@
 export interface User{
-
-    username:string
-    email:string
+    username:string,
+    email:string,
     password:string
 }
 export interface UserLogin{
-    email:string
+    email:string,
     password:string
 }

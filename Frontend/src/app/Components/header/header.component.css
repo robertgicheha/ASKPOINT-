@@ -163,4 +163,53 @@ nav {
   border-radius: 5px;
   cursor: pointer;
   }
- 
+
+/* CSS for mobile devices */
+@media only screen and (max-width: 600px) {
+  .header{
+    height: 10%;
+  }
+  nav {
+    height: 15%;
+    padding: 5px;
+  }
+  input[type="text"] {
+    width: 100%;
+    margin-left: 0;
+  }
+  button[type="search"] {
+    margin-left: 0;
+  }
+  .search{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+  .uliza{
+    display: none;
+  }
+  .nav-left a {
+    font-size: 20px;
+    padding-top: 10px;
+  }
+  .dropdown {
+    margin-left: 10px;
+  }
+  .dropdown-content {
+    width: 80px;
+  }
+  .nav-right li {
+    margin-left: 5px;
+    gap: 5px;
+  }
+  button[type="submit"]{
+    margin-left: 0%;
+    padding: 5px 10px;
+  }
+  button[type="add"]{
+    margin-left: 0%;
+    padding: 5px 10px;
+  }
+}

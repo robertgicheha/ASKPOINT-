@@ -130,4 +130,25 @@
     .meta span {
       margin-right: 0.5rem;
     }
-    
+    @media only screen and (max-width: 600px) {
+  input[type="text"] {
+    width: 90%;
+    margin: 10% auto 0 auto;
+  }
+
+  .ask-question {
+    margin: 30px auto;
+  }
+
+  nav a {
+    padding: 0.25rem;
+  }
+
+  .question h2 {
+    font-size: 1.2rem;
+  }
+
+  main {
+    padding: 5px;
+  }
+}

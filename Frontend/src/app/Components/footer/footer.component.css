@@ -46,3 +46,24 @@ p{
 h3,h4{
   color: white;
 }
+/* CSS for mobile devices */
+
+@media screen and (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    padding: 20px;
+  }
+
+  .icons {
+    margin-top: 20px;
+    justify-content: center;
+  }
+
+  .company,
+  .support,
+  .locate {
+    text-align: center;
+  }
+}

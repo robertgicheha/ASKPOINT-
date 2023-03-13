@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from "./Components/header/header.component";
@@ -9,9 +8,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from "./Components/home/home.component";
 import { LoginComponent } from './Components/Auth/login/login.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
 import { RegisterComponent } from "./Components/Auth/register/register.component";
 import { AskQuestionComponent } from "./Components/Questions/ask-question/ask-question.component";
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -31,7 +30,8 @@ import { AskQuestionComponent } from "./Components/Questions/ask-question/ask-qu
         FormsModule,
         ReactiveFormsModule,
         RegisterComponent,
-        AskQuestionComponent
+        AskQuestionComponent,
+        HttpClientModule
     ]
 })
 export class AppModule { }

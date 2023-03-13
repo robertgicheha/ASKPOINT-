@@ -76,7 +76,7 @@ h5{
   text-align: center;
 }
 button[type="submit"] {
-  background-color: #4CAF50;
+  background-color: #0f0f0f;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -86,7 +86,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-  background-color: #3e8e41;
+  background-color: #7f817f;
 }
 .form-group {
   display: flex;
@@ -138,3 +138,24 @@ input.ng-invalid.ng-touched {
 .valid {
   background-color: green;
 }
+
+@media screen and (max-width: 768px) {
+  .content {
+    width: 90vw;
+    height: auto;
+    margin: auto;
+    flex-direction: column;
+  }
+  
+  .formDiv {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+  }
+  
+  button[type="submit"] {
+    margin-top: 10px;
+    margin-left: 0;
+  }
+}
+

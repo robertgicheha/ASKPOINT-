@@ -4,7 +4,11 @@ body {
     margin: 0;
     padding: 0;
   }
-  
+  .questions{
+    text-align: center;
+    display: flex;
+    margin: 40px;
+  }
   header {
     background-color: #333;
     color: #fff;
@@ -14,7 +18,24 @@ body {
   h1 {
     margin: 0;
   }
+  .question {
+    display: flex;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    gap:20px;
+    padding:1rem;
+    margin-bottom: 1rem;
+  }
+  .upvote {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
   
+  .upvote-icon {
+    width: 50px;
+  }
+  .ans
   main {
     max-width: 800px;
     margin: 20px auto;
@@ -28,7 +49,10 @@ body {
   label {
     margin-top: 10px;
   }
-  
+  .answer{
+    width:200px;
+    height: 200px;
+  }
   input[type="text"],
   textarea {
     padding: 10px;
@@ -44,8 +68,12 @@ body {
     padding: 10px 20px;
     border: none;
     cursor: pointer;
+    width: auto;
+    height: auto;
   }
-  
+  h2{
+    text-align: center;
+  }
   input[type="submit"]:hover {
     background-color: #555;
   }
@@ -62,14 +90,6 @@ body {
   main {
     margin: 10px auto;
     max-width: 90%;
-  }
-  .votes {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-  .votesIcons {
-    width: 30px;
   }
   li {
     padding: 5px;

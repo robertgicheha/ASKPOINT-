@@ -1,60 +1,61 @@
 <app-header></app-header>
-<div class="login--page">
+<div class="login-page">
   <form [formGroup]="loginform" (ngSubmit)="send()">
-    <div class="login--container">
-      <div class="login--form">
-        <h2>Login</h2>
-        <div class="login--form__item" >
-          <div class="form--item">
+    <div class="login-container">
+      <div class="login-form">
+        <div class="top">
+          <h2>ASKPOINT</h2>
+          <h5>LOGIN</h5>
+          <br />
+        </div>
+        <div class="login-form-item">
+          <div class="form-item">
             <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              required
-              formControlName="email"
-             
-            />
+            <input type="email" name="email" required formControlName="email" />
             <span
               class="error"
-              *ngIf="!loginform.get('email')?.valid && loginform.get('email')?.touched"
+              *ngIf="
+                !loginform.get('email')?.valid &&
+                loginform.get('email')?.touched
+              "
             >
-              <span class="error" *ngIf="loginform.get('email')!.errors!['required']"
+              <span
+                class="error"
+                *ngIf="loginform.get('email')!.errors!['required']"
                 >Please enter an email</span
               >
-              <span class="error" *ngIf="loginform.get('email')!.errors!['email']"
+              <span
+                class="error"
+                *ngIf="loginform.get('email')!.errors!['email']"
                 >Please enter a valid emial</span
               >
             </span>
           </div>
-          <div class="form--item">
+          <div class="form-item">
             <label>Password</label>
-            <input
-              type="password"
-              name="password"
-              formControlName="password"
-
-            />
+            <input type="password" name="password" formControlName="password" />
             <span
               class="error"
               *ngIf="
-                !loginform.get('password')?.valid && loginform.get('password')?.touched
+                !loginform.get('password')?.valid &&
+                loginform.get('password')?.touched
               "
               >Please enter a valid password</span
             >
-            <div class="recovery--text">
+            <div class="recovery-text">
               Forgot Password...<span routerLink="/recovery">Recovery</span>
             </div>
           </div>
         </div>
         <button
-          class="form--btn"
+          class="form-btn"
           [disabled]="!loginform.valid"
           [ngClass]="{ invalid: !loginform.valid, valid: loginform.valid }"
-          routerLink="/home"
+          routerLink="/questions"
         >
           Login
         </button>
-        <div class="login--text">
+        <div class="login-text">
           Do not have an account yet...<span routerLink="/register"
             >SignUp</span
           >

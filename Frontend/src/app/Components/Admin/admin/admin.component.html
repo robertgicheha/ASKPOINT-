@@ -1,0 +1,110 @@
+
+<body>
+	
+	<div class="sidebar">
+		<h1>Admin Panel</h1>
+		<ul>
+			<li><a href="#"  routerLink="/aa">Analytics</a></li>
+			<li><a href="#"  routerLink="/aq">Questions </a></li>
+			<li><a href="#"  routerLink="/au">Users</a></li>
+			<br>
+		<br>
+		<br>
+		<li><a href="#"  routerLink="/logout">LogOut</a></li>
+		</ul>
+	</div>
+	<div class="main-content">
+		<!-- Main content goes here -->
+		<div class="header">
+			<h1>Admin Dashboard</h1>
+		</div>
+		<div class="content">
+			<div class="questions" routerLink="/aq" >
+				<h1>Questions</h1>
+				<h1>
+					200
+				</h1>
+				<!-- <div class="total">
+					<a href="#"  routerLink="/aq">Total number of questions asked </a>
+				</div> -->
+			</div>
+			<div class="questions"  routerLink="/au">
+				<h1>Users</h1>
+				<h1>
+					200
+				</h1>
+				<!-- <div class="total">
+					<h3>Total number of answers given</h3>
+				</div> -->
+			</div>
+			
+		</div>
+
+		<div class="table">
+			<h2>USERS</h2>
+			<table>
+				<tr>
+				  <th>User ID</th>
+				  <th>Username</th>
+				  <th>Email Address</th>
+				  <th>Edit</th>
+				  <th>Delete</th>
+				</tr>
+				<tr>
+				  <td>1</td>
+				  <td>JohnDoe</td>
+				  <td>john.doe@example.com</td>
+				  <td><button>Edit</button></td>
+				  <td><button>Delete</button></td>
+				</tr>
+				<tr>
+				  <td>2</td>
+				  <td>JaneDoe</td>
+				  <td>jane.doe@example.com</td>
+				  <td><button>Edit</button></td>
+				  <td><button>Delete</button></td>
+				</tr>
+				<!-- more rows here -->
+			  </table>
+		</div>
+		<div class="table">
+			<h2>QUESTIONS</h2>
+	<table>
+		<thead>
+			<tr>
+				<th>Question ID</th>
+				<th>Question Name</th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>1</td>
+				<td>What is your favorite color?</td>
+				<td>
+					<button class="edit">Edit</button>
+					<button class="delete">Delete</button>
+				</td>
+			</tr>
+			<tr>
+				<td>2</td>
+				<td>What is your favorite food?</td>
+				<td>
+					<button class="edit">Edit</button>
+					<button class="delete">Delete</button>
+				</td>
+			</tr>
+			<tr>
+				<td>3</td>
+				<td>What is your favorite movie?</td>
+				<td>
+					<button class="edit">Edit</button>
+					<button class="delete">Delete</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+		</div>
+	
+	</div>
+</body>

@@ -15,7 +15,7 @@
 
 }
 button[type="submit"]:hover {
-    background-color: rgb(62, 182, 98);
+    background-color: rgb(58, 59, 59);
   }
   
   button[type="submit"]{
@@ -27,7 +27,7 @@ button[type="submit"]:hover {
   border-radius: 5px;
   cursor: pointer;
   }
-.error-template {
+.error {
     margin-bottom: 300px;
     padding: 40px 15px;
     text-align: center;
@@ -35,36 +35,30 @@ button[type="submit"]:hover {
     background-color: whitesmoke;
 }
 
-.error-actions {
+.buttons {
     margin-top: 5px;
     margin-bottom: 15px;
 }
 
 
-.error-template h1 {
+.error h1 {
     font-size: 50px;
 }
 
-.error-template h2 {
+.error h2 {
     font-size: 30px;
     margin-top: 30px;
 }
 
-.error-details {
-    font-size: 18px;
-    color: #7a7a7a;
-}
+
 
 @media screen and (max-width: 768px) {
-    .error-template h1 {
+    .error h1 {
         font-size: 20px;
     }
 
-    .error-template h2 {
+    .error h2 {
         font-size: 16px;
     }
 
-    .error-details {
-        font-size: 10px;
-    }
 }

@@ -9,7 +9,7 @@
           <h5>SIGN UP</h5>
           <br />
         </div>
-        <div class="inputs">
+        <div class="sign-in">
           <div class="form-group">
             <label>Username</label>
             <input type="text" name="username" formControlName="username" />
@@ -18,7 +18,7 @@
               *ngIf="
                 !form.get('username')?.valid && form.get('username')?.touched
               "
-              >Please Enter a Valid username</span
+              >Please enter a valid username</span
             >
           </div>
 
@@ -30,10 +30,10 @@
               *ngIf="!form.get('email')?.valid && form.get('email')?.touched"
             >
               <span class="error" *ngIf="form.get('email')!.errors!['required']"
-                >Please Input an Email</span
+                >Please enter an email</span
               >
               <span class="error" *ngIf="form.get('email')!.errors!['email']"
-                >Please Enter a Valid Email</span
+                >Please enter a valid email</span
               >
             </span>
           </div>
@@ -54,13 +54,14 @@
           <div class="form-group">
             <button
               type="submit"
-              class="register" routerLink="/home" [ngClass]="{ invalid: !form.valid, valid: form.valid }"
+              class="register" routerLink="/login" [disabled]="!form.valid"
+          [ngClass]="{ invalid: !form.valid, valid: form.valid }"
             >
               REGISTER
             </button>
           </div>
         </div>
-        <div class="alternative">
+        <div class="account">
           <p>OR</p>
           <br />
           <p>Already have an account? <a routerLink="/login">LogIn</a></p>

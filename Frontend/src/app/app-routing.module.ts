@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthService } from './Components/Services/auth.service';
+import { AuthService } from '../app/Services/auth.service';
 
 const routes: Routes = [
   {
@@ -8,16 +8,31 @@ const routes: Routes = [
     loadComponent: () =>
       import('./Components/home/home.component').then((h) => h.HomeComponent),
   },
+
   {
     path: 'home',
     loadComponent: () =>
       import('./Components/home/home.component').then((h) => h.HomeComponent),
   },
   {
+    path: 'about',
+    loadComponent: () =>
+      import('./Components/about-us/about-us.component').then(
+        (a) => a.AboutUsComponent
+      ),
+  },
+  {
     path: 'login',
     loadComponent: () =>
       import('./Components/Auth/login/login.component').then(
         (l) => l.LoginComponent
+      ),
+  },
+  {
+    path: 'logout',
+    loadComponent: () =>
+      import('./Components/Auth/logout/logout.component').then(
+        (o) => o.LogoutComponent
       ),
   },
   {
@@ -56,7 +71,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'updateanswer',
+    path: 'update',
     loadComponent: () =>
       import('./Components/Answers/update-answer/update-answer.component').then(
         (u) => u.UpdateAnswerComponent
@@ -86,22 +101,22 @@ const routes: Routes = [
   {
     path: 'admin',
     loadComponent: () =>
-      import('./Components/Admin/admin.component').then(
+      import('./Components/Admin/admin/admin.component').then(
         (a) => a.AdminComponent
       ),
   },
   {
-    path: 'admin',
+    path: 'aq',
     loadComponent: () =>
-      import('./Components/Admin/admin.component').then(
-        (a) => a.AdminComponent
-      ),
+      import(
+        './Components/Admin/admin-questions/admin-questions.component'
+      ).then((m) => m.AdminQuestionsComponent),
   },
   {
-    path: 'admin',
+    path: 'au',
     loadComponent: () =>
-      import('./Components/Admin/admin.component').then(
-        (a) => a.AdminComponent
+      import('./Components/Admin/admin-users/admin-users.component').then(
+        (u) => u.AdminUsersComponent
       ),
   },
   {

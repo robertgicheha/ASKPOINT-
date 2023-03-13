@@ -13,5 +13,6 @@ import { AboutUsComponent } from "../about-us/about-us.component";
     imports: [CommonModule, HeaderComponent, FooterComponent, RouterModule,  AboutUsComponent]
 })
 export class HomeComponent {
+auth: any;
 
 }

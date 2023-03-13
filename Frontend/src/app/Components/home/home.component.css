@@ -2,11 +2,6 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
-input {
-
-    width: 600px;
-    height: 40px;
-}
 
 .buttons {
     display: flex;
@@ -25,7 +20,6 @@ button {
 
 button:hover {
     background-color: rgb(77, 76, 76);
-
 }
 
 .main {
@@ -48,23 +42,20 @@ button:hover {
 
 }
 
-.brand {
+.aap-name {
     margin-top: 100px;
 }
-.searchIcon{
-    width: 30px;
-    margin-left: -40px;
-}
-.top {
+
+.main-content {
     display: flex;
     justify-content: space-evenly;
     margin-top: 100px;
     gap: 1px;
-    /* background-color: rgba(221,221,221,255) */
+
 
 }
 
-.top-join {
+.content {
     background-color: whitesmoke;
     display: flex;
     flex-direction: column;
@@ -79,12 +70,9 @@ button:hover {
 
 }
 
-.topask:hover {
-    opacity: 0.9;
-    box-shadow: 10px 10px 10px rgba(207, 204, 204, 0.5)
-}
 
-.ask {
+
+.discover {
     width: auto;
 }
 
@@ -111,30 +99,24 @@ p{
     font-weight: lighter;
 }
 /* Mobile Styles */
-@media (max-width: 767px)  {
+/* @media (max-width: 767px)  {
     input {
         width: 100%;
         height: 40px;
         margin-bottom: 1rem;
     }
 
-    .brand {
+    .aap-name {
         margin-top: 2rem;
     }
 
-    .searchInput {
-        padding: 10px;
-        width: 400px;
-    }
-
-  
-    .top {
+    .main-content {
         justify-content: space-around;
         margin-top: 3rem;
         gap: 20px;
     }
 
-    .ask {
+    .discover {
         width: 80%;
         margin-bottom: 1rem;
     }
@@ -144,13 +126,14 @@ p{
         margin-bottom: 1rem;
     }
 
-    .top-join {
+    .content {
         width: 100%;
         margin-bottom: 1rem;
     }
-}
+} */
 
 /* CSS RESPONSIVENESS FOR MOBILE PHONES */
+
 /* styles for mobile screens */
 @media (max-width: 600px) {
     input {
@@ -161,12 +144,12 @@ p{
         align-items: center;
         gap: 10px;
     }
-    .top {
+    .main-content {
         flex-direction: column;
         align-items: center;
         margin-top: 50px;
     }
-    .top-join {
+    .content {
         width: 80%;
         height: auto;
     }

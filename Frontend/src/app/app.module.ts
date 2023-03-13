@@ -11,6 +11,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from "./Components/Auth/register/register.component";
 import { AskQuestionComponent } from "./Components/Questions/ask-question/ask-question.component";
 import { HttpClientModule } from '@angular/common/http';
+import { AdminComponent } from './Components/Admin/admin/admin.component';
+import { AdminQuestionsComponent } from './Components/Admin/admin-questions/admin-questions.component';
+import { AdminUsersComponent } from './Components/Admin/admin-users/admin-users.component';
 
 
 @NgModule({
@@ -31,7 +34,10 @@ import { HttpClientModule } from '@angular/common/http';
         ReactiveFormsModule,
         RegisterComponent,
         AskQuestionComponent,
-        HttpClientModule
+        HttpClientModule,
+        AdminComponent,
+        AdminQuestionsComponent,
+        AdminUsersComponent
     ]
 })
 export class AppModule { }

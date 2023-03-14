@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -9,5 +9,9 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./error.component.css']
 })
 export class ErrorComponent {
-
+  @Input() errorMessage=''
+  @Output() close=new EventEmitter()
+  onClose(){
+  this.close.emit()
+  }
 }

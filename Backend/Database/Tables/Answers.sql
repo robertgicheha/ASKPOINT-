@@ -15,7 +15,8 @@ CREATE TABLE answers (
 
 
 drop table answers
-INSERT INTO answers (questions_id, answer_title,  answer_body, user_id, upvotes, downvotes) VALUES 
-  (1, 'This is my answer to the question',  'This is my answer to the question','U002', 1, 0),
-  (2, 'Another user''s answer to the question', 'This is my answer to the question', 'U003', 0, 1),
-  (3, 'This is my answer to a different question', 'This is my answer to the question','U002', 1, 0);
+
+-- INSERT INTO answers (questions_id, answer_title,  answer_body, user_id, upvotes, downvotes) VALUES 
+--   (1, 'This is my answer to the question',  'This is my answer to the question','U002', 1, 0),
+--   (2, 'Another user''s answer to the question', 'This is my answer to the question', 'U003', 0, 1),
+--   (3, 'This is my answer to a different question', 'This is my answer to the question','U002', 1, 0);

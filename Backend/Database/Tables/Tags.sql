@@ -10,7 +10,7 @@ CONSTRAINT fk_tags UNIQUE (tag_name)
 
 Drop TABLE tags
 
-INSERT INTO tags (tag_name) VALUES 
-  ('SQL'),
-  ('CSS'),
-  ('HTML');
+-- INSERT INTO tags (tag_name) VALUES 
+--   ('SQL'),
+--   ('CSS'),
+--   ('HTML');

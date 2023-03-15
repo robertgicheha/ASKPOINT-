@@ -18,8 +18,8 @@ CREATE TABLE questions
 
 drop table questions
 
-INSERT INTO questions (question_title, tag_name, question_body, user_id, views, upvotes, downvotes) VALUES 
-  ('How to join tables in SQL?', 'SQL', 'I am trying to join two tables in SQL, but I am not sure how to do it. Can someone please help me with this?', 'U002', 20, 5, 1),
-  ('Best practices for database design', 'CSS', 'I am designing a new database and want to know the best practices for designing a database. Can anyone give me some tips?', 'U003', 10, 2, 0),
-  ('Data modeling for e-commerce applications', 'HTML', 'I am working on a data modeling project for an e-commerce application. Can anyone suggest some good resources for data modeling in e-commerce?', 'U002', 15, 3, 1);
+-- INSERT INTO questions (question_title, tag_name, question_body, user_id, views, upvotes, downvotes) VALUES 
+--   ('How to join tables in SQL?', 'SQL', 'I am trying to join two tables in SQL, but I am not sure how to do it. Can someone please help me with this?', 'U002', 20, 5, 1),
+--   ('Best practices for database design', 'CSS', 'I am designing a new database and want to know the best practices for designing a database. Can anyone give me some tips?', 'U003', 10, 2, 0),
+--   ('Data modeling for e-commerce applications', 'HTML', 'I am working on a data modeling project for an e-commerce application. Can anyone suggest some good resources for data modeling in e-commerce?', 'U002', 15, 3, 1);
 

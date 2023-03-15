@@ -4,51 +4,16 @@ CREATE  TABLE users (
   username VARCHAR(50) NOT NULL,
   email VARCHAR(255) NOT NULL,
   password VARCHAR(255) NOT NULL,
-  is_admin BIT NOT NULL DEFAULT 0,
+  Role VARCHAR(255) NOT NULL DEFAULT 'user',
   created_at DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE (email)
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  isDeleted BIT NOT NULL DEFAULT 0,
 );
+
 
 drop table users
 
-INSERT INTO users (user_id, username, email, password, is_admin) VALUES 
-  ('U001', 'JohnDoe', 'johndoe@example.com', 'password123', 1),
-  ('U002', 'JaneDoe', 'janedoe@example.com', 'password456', 0),
-  ('U003', 'BobSmith', 'bobsmith@example.com', 'password789', 0);
-
-
-
-
-
-CREATE PROCEDURE uspSignUpUser
-    @user_id VARCHAR(255),
-    @username VARCHAR(50),
-    @email VARCHAR(255),
-    @password VARCHAR(255)
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    INSERT INTO users (user_id, username, email, password)
-    VALUES (@user_id, @username, @email, @password);
-END
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  Create a stored procedure in sql server
+-- INSERT INTO users (user_id, username, email, password, Role, isDeleted) VALUES 
+--   ('U001', 'JohnDoe', 'johndoe@example.com', 'password123', 'admin' ,1),
+--   ('U002', 'JaneDoe', 'janedoe@example.com', 'password456', 'user', 0),
+--   ('U003', 'BobSmith', 'bobsmith@example.com', 'password789','user', 0)

@@ -1,9 +1,9 @@
 
 
-CREATE PROCEDURE sp_post_question
-    @user_id VARCHAR(255),
+CREATE PROCEDURE sp_PostQuestionUser
+    @UserId VARCHAR(255),
     @title VARCHAR(255),
-    @tag_name VARCHAR(255),
+    @tag VARCHAR(255),
     @body TEXT
 AS
 BEGIN
@@ -11,8 +11,8 @@ BEGIN
     
     DECLARE @post_id INT;
     
-    INSERT INTO posts (title, tag_name, body, user_id)
-    VALUES (@title, @tag_name, @body, @user_id);
+    INSERT INTO posts (user_id ,post_title, tag_name, post_body)
+    VALUES (@UserId, @title, @Tag, @body);
     
     
 END;

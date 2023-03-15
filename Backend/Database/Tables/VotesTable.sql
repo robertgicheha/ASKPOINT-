@@ -7,7 +7,7 @@ CREATE TABLE votes (
   upvotes INT NOT NULL DEFAULT 0,
   downvotes INT NOT NULL DEFAULT 0,
   created_at DATETIME2 DEFAULT CURRENT_TIMESTAMP,
- 
+ updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
  FOREIGN KEY (post_id) REFERENCES posts(post_id),
   
  FOREIGN KEY (user_id)  REFERENCES users(user_id)

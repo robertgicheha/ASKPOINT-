@@ -2,8 +2,9 @@ import { RequestHandler,Request,Response,NextFunction } from 'express'
 import dotenv from 'dotenv'
 import path from 'path'
 import jwt from 'jsonwebtoken'
-import { DecodedData } from '../Models'
-dotenv.config({ path: path.resolve(__dirname, '../../.env') })
+import { DecodedData } from '../Interfaces/index'
+
+dotenv.config({ path:path.resolve(__dirname, '../../src/.env')})
 
 interface ExtendedRequest extends Request{
 info?:DecodedData

@@ -1,0 +1,18 @@
+POST  http://localhost:4000/auth/register
+Content-Type: application/json
+
+{
+    "username":"teetoh",
+    "email":"shmalologicheha@gmail.com",
+    "password":"TryMe!2023@"
+}
+
+###
+POST  http://localhost:4000/auth/login
+Content-Type: application/json
+
+{
+     "Email":"shmalologicheha@gmail.com",
+    "Password":"2023online"
+}
+

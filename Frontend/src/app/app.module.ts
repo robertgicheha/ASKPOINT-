@@ -19,6 +19,7 @@ import { AdminUsersComponent } from './Components/Admin/admin-users/admin-users.
 @NgModule({
     declarations: [
         AppComponent,
+        
     ],
     providers: [],
     bootstrap: [AppComponent],

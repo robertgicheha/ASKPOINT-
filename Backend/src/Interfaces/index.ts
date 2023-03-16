@@ -1,15 +1,23 @@
 export interface User {
-    user_id: string;
-    username: string;
-    email: string;
-    password: string;
+    UserId: string;
+    Username: string;
+    Email: string;
+    Password: string;
     Role: string;
   }
 
+  // export interface UserProfile{
+  //   Display_name: string;
+  //   location: string;
+  //   about:string;
+    
+  // }
+
   export interface DecodedData{
-    user_id: string;
-    username: string;
-    email: string;
+    UserId: string;
+    Username: string;
+    Email: string;
+    Password: string;
     Role: string;
     iat: number,
     exp: number

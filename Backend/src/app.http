@@ -1,18 +1,25 @@
-POST  http://localhost:4000/auth/register
+//REGISTER A USER
+POST  http://localhost:4000/user/register
 Content-Type: application/json
 
 {
-    "username":"teetoh",
-    "email":"shmalologicheha@gmail.com",
-    "password":"TryMe!2023@"
+    "Name":"roe",
+    "Email":"roe@gmail.com",
+    "Password":"TryMe!2023@"
 }
 
+
+// USER LOGIN
 ###
-POST  http://localhost:4000/auth/login
+POST  http://localhost:4000/user/login
 Content-Type: application/json
 
 {
-     "Email":"shmalologicheha@gmail.com",
-    "Password":"2023online"
-}
+    "Email":"roe@gmail.com",
+    "Password":"TryMe!2023@"
 
+}
+###
+//HOMEPAGE
+GET http://localhost:4000/user/home
+token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiY2RhMzkxYmMtYmM0Ni00MGRlLTg2YWMtZmQ4OTM5YmNhYmMyIiwidXNlcm5hbWUiOiJyb2UiLCJlbWFpbCI6InJvZUBnbWFpbC5jb20iLCJSb2xlIjoidXNlciIsImNyZWF0ZWRfYXQiOiIyMDIzLTAzLTE3VDA5OjU2OjI3Ljg0M1oiLCJ1cGRhdGVkQXQiOiIyMDIzLTAzLTE3VDA5OjU2OjI3Ljg0M1oiLCJpc0RlbGV0ZWQiOmZhbHNlLCJpYXQiOjE2NzkwMzYzODYsImV4cCI6MTY3OTEyMjc4Nn0.EpyREJ_ifsa-bmOB1u5VWscfwXEqKTA344OGyhyo3tM

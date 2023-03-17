@@ -1,5 +1,5 @@
 
-CREATE PROCEDURE sp_registerUser
+CREATE OR ALTER PROCEDURE sp_registerUser
     @userId VARCHAR(255),
     @Name VARCHAR(50),
     @Email VARCHAR(255),
@@ -13,5 +13,9 @@ BEGIN
     VALUES
         (@userId,@Name, @Email, @Password);
 END
+
+EXEC  sp_registerUser @userId= 'U004' ,@Name='Teetoh' , @Email='teetoh@gmail.com',@Password ='@2023Online,*';
+
+
 
 

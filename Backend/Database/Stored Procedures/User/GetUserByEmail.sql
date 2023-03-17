@@ -6,3 +6,5 @@ BEGIN
     FROM users
     WHERE email = @Email
 END
+
+EXEC sp_GetUserbyEmail @Email= 'teetoh@gmail.com';

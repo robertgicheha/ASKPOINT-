@@ -2,7 +2,8 @@ import mssql from 'mssql'
 import dotenv from 'dotenv'
 import path from 'path'
 
-dotenv.config({ path:path.resolve(__dirname, '../../src/.env')})
+dotenv.config({ path:path.resolve(__dirname, '../../.env')})
+
 
 export const sqlConfig = {
 

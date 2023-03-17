@@ -6,3 +6,5 @@ BEGIN
     FROM users
     WHERE user_id = @userId
 END
+
+EXEC sp_RemoveUserFromDatabase @userId='U004'

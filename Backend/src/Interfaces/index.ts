@@ -1,8 +1,8 @@
 export interface User {
     UserId: string;
-    Username: string;
+    userame: string;
     Email: string;
-    Password: string;
+    password: string;
     Role: string;
   }
 
@@ -15,7 +15,7 @@ export interface User {
 
   export interface DecodedData{
     UserId: string;
-    Username: string;
+    Name: string;
     Email: string;
     Password: string;
     Role: string;

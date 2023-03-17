@@ -2,12 +2,12 @@ import Joi, { ref } from "joi";
 
 // USER REGISTER Helper
 export const UserRegisterHelper = Joi.object({
-  username: Joi.string().required(),
-  email: Joi.string().required().email().messages({
+  Name: Joi.string().required(),
+  Email: Joi.string().required().email().messages({
     "string.empty": "Please enter an email",
     "string.email": "email is not valid",
   }),
-  password: Joi.string().required().pattern(new 
+  Password: Joi.string().required().pattern(new 
     RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$')
     ),
     ConfirmPassword:Joi.equal(ref('Password'))

@@ -1,3 +1,6 @@
+USE StackOverflow
+GO
+
 
 CREATE PROCEDURE sp_GetUserbyEmail (@Email VARCHAR(255))
 AS
@@ -6,5 +9,3 @@ BEGIN
     FROM users
     WHERE email = @Email
 END
-
-EXEC sp_GetUserbyEmail @Email= 'teetoh@gmail.com';

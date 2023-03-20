@@ -2,7 +2,7 @@ import { RequestHandler,Request,Response,NextFunction } from 'express'
 import dotenv from 'dotenv'
 import path from 'path'
 import jwt from 'jsonwebtoken'
-import { DecodedData, User} from '../Interfaces/index'
+import { DecodedData, UserBody} from '../Models/user'
 
 dotenv.config({ path:path.resolve(__dirname, '../.env')})
 

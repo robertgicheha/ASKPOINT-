@@ -1,3 +1,7 @@
+USE StackOverflow
+GO
+
+
 CREATE  PROCEDURE sp_GetUserbyId (@userId  VARCHAR(255))
 AS
 BEGIN

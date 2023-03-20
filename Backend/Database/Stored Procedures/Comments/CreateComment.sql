@@ -1,10 +1,17 @@
+USE StackOverflow
+GO
+
 CREATE OR ALTER PROCEDURE sp_CreateComment 
-    @body TEXT,
-    @user_id VARCHAR(255),
-    @questions_id INT
+  @commentId VARCHAR(255),
+  @userId VARCHAR(255),
+  @answerId VARCHAR(255),
+  @CreatedAt DATE,
+  @body TEXT
 AS
 BEGIN
-    INSERT INTO comments (body, user_id, questions_id) 
-    VALUES (@body, @user_id, @questions_id);
+    INSERT INTO comments (comment_id , user_id, answer_id,created_at,body) 
+    VALUES (@commentId , @userId , @answerId , @CreatedAt , @body);
+
+      SELECT * FROM comments WHERE comment_id=@commentId
 END;
 

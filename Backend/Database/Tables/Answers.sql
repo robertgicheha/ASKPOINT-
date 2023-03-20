@@ -1,20 +1,17 @@
+USE StackOverflow
+GO
+
 
 CREATE TABLE answers (
-  answer_id INT IDENTITY(1,1) NOT NULL,
-  questions_id INT  NOT NULL,
-  answer_title VARCHAR(255) NOT NULL,
-  tag_name VARCHAR(255) NOT NULL,
-  answer_body TEXT NOT NULL,
+  answer_id VARCHAR(255) NOT NULL,
+  questions_id VARCHAR(255)  NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  body TEXT NOT NULL,
   user_id VARCHAR(255) NOT NULL,
-  tag_id INT NOT NULL,
-  created_at DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
-  answer_upvotes INT NOT NULL DEFAULT 0,
-  answer_downvotes INT NOT NULL DEFAULT 0,
+   created_at DATETIME2 DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (answer_id),
 
-    FOREIGN KEY (tag_id) REFERENCES tags(tag_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)  ON DELETE CASCADE,
     FOREIGN KEY (questions_id) REFERENCES questions(questions_id),
 );
 

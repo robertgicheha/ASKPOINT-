@@ -1,11 +1,15 @@
+
+                                                 #USERS
+
 //REGISTER A USER
 POST  http://localhost:4000/user/register
 Content-Type: application/json
 
 {
-    "Name":"roe",
+    "Name":"me",
     "Email":"roe@gmail.com",
-    "Password":"TryMe!2023@"
+    "Password":"@me2023"
+    
 }
 
 
@@ -22,4 +26,241 @@ Content-Type: application/json
 ###
 //HOMEPAGE
 GET http://localhost:4000/user/home
+
 token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiY2RhMzkxYmMtYmM0Ni00MGRlLTg2YWMtZmQ4OTM5YmNhYmMyIiwidXNlcm5hbWUiOiJyb2UiLCJlbWFpbCI6InJvZUBnbWFpbC5jb20iLCJSb2xlIjoidXNlciIsImNyZWF0ZWRfYXQiOiIyMDIzLTAzLTE3VDA5OjU2OjI3Ljg0M1oiLCJ1cGRhdGVkQXQiOiIyMDIzLTAzLTE3VDA5OjU2OjI3Ljg0M1oiLCJpc0RlbGV0ZWQiOmZhbHNlLCJpYXQiOjE2NzkwMzYzODYsImV4cCI6MTY3OTEyMjc4Nn0.EpyREJ_ifsa-bmOB1u5VWscfwXEqKTA344OGyhyo3tM
+
+### UPDATE USER
+PUT http://localhost:4000/users/update/id
+Content-Type: application/json
+
+{
+    "Name":"roe",
+    "Email":"roe@gmail.com",
+    "Password":"TryMe!2023@"
+}
+
+### GET ALL USERS
+GET http://localhost:4000/users/allusers
+
+
+### GET USER BY ID
+GET http://localhost:4000/users/id
+
+
+### DELETE USER
+
+DELETE http://localhost:4000/api/users/id
+
+
+                                                          #QUESTIONS
+
+### CREATE A QUESTION
+POST http://localhost:4000/question/create
+Content-Type: application/json
+
+{
+  
+}
+
+
+### UPDATE QUESTION
+PUT http://localhost:4000/question/update/id
+Content-Type: application/json
+
+{
+
+
+}
+
+### GET QUESTION BY ID
+GET http://localhost:4000/question/id
+
+
+
+### GET ALL QUESTIONS
+GET http://localhost:4000/questions/allquestions
+
+
+
+### DELETE QUESTION
+DELETE http://localhost:4000/api/question/delete/Id
+
+
+
+
+                                                 //QUESTION VOTES
+
+### CREATE QUESTION VOTE
+POST http://localhost:4000/api/questionvote/createvote
+Content-Type: application/json
+
+{
+
+  
+}
+
+### UPDATE QUESTION VOTE
+PUT http://localhost:4000/api/questionvote/update/id
+Content-Type: application/json
+
+{
+
+  
+}
+
+### GET ALL QUESTION VOTES
+GET http://localhost:4000/api/questionvote/getall
+
+
+### GET QUESTION VOTE BY ID
+GET http://localhost:4000/api/questionvote/getvote/id
+
+
+
+
+
+
+  
+
+
+                                       //ANSWERS
+
+### GET ALL ANSWERS
+GET http://localhost:4000/answer/allanswers
+
+
+
+### GET ANSWER BY ID
+GET http://localhost:4000/answer/id
+
+
+
+
+### CREATE ANSWER
+POST http://localhost:4000/answer/createanswer
+Content-Type: application/json
+
+{
+  
+
+}
+
+
+
+### UPDATE ANSWER
+PUT http://localhost:400/answer/update/id
+Content-Type: application/json
+
+{
+
+
+}
+
+
+### DELETE ANSWER
+DELETE http://localhost:4000/answer/delete/id
+
+
+
+
+
+                                         //ANSWER VOTES
+
+
+ ### CREATE ANSWER VOTE
+POST http://localhost:4000/answervote/createvote
+Content-Type: application/json
+{
+  
+}
+
+### UPDATE ANSWER VOTE
+PUT http://localhost:4000/answervote/update/id
+Content-Type: application/json
+{
+  
+}
+  
+###GET ANSWER VOTE BY ID
+GET http://localhost:4000/answervote/id
+
+
+### GET ALL ANSWER VOTES
+GET http://localhost:4000/answervote/getall
+
+
+
+                       
+
+                       
+                                             // TAGS
+
+    
+### CREATE TAG
+POST http://localhost:4000/tag/createtag
+Content-Type: application/json
+
+{
+  
+}
+
+
+### UPDATE TAG
+PUT http://localhost:4000/tag/update/
+Content-Type: application/json
+
+{
+
+}
+
+
+### GET TAG BY ID
+GET http://localhost:4000/tag/
+
+### GET ALL TAGS
+GET http://localhost:4000/tag/getall
+
+
+### DELETE TAG
+DELETE http://localhost:4000/tag/delete/
+
+
+
+
+                                           //COMMENTS
+
+### CREATE COMMENT
+POST http://localhost:4000/comment/create
+Content-Type: application/json
+
+{
+  
+
+}
+
+
+### UPDATE COMMENT
+
+PUT http://localhost:4000/comment/update/id
+Content-Type: application/json
+
+{
+  
+}
+
+ ### GET COMMENT BY ID
+
+GET http://localhost:4000/comment/id
+
+### GET ALL COMMENTS
+
+GET http://localhost:4000/comment/getall
+
+
+### DELETE COMMENT
+DELETE http://localhost:4000/comment/delete/id
+
+
+
+
+

@@ -1,11 +1,13 @@
-CREATE PROCEDURE sp_GetUserAnswerbyId
-  @user_id VARCHAR(255)
+USE StackOverflow
+GO
+
+CREATE OR ALTER PROCEDURE sp_GetUserAnswerbyId
+  @userId VARCHAR(255)
 AS
 BEGIN
   SELECT *
-  FROM answers
-  WHERE user_id = @user_id;
+  FROM answers WHERE user_id = @userId;
 END;
 
 
-EXEC  sp_GetUserAnswerbyId @user_id = 'U002';
+-- EXEC  sp_GetUserAnswerbyId @user_id = 'U002';

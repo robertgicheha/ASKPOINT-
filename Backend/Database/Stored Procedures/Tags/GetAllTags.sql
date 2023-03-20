@@ -1,10 +1,10 @@
-CREATE PROCEDURE sp_GetAllTags
+USE StackOverflow
+GO
+
+CREATE OR ALTER PROCEDURE sp_GetAllTags
 AS
 BEGIN
-    SET NOCOUNT ON;
-    
-    SELECT * FROM tags;
+    SELECT * FROM tags
+
+
 END
-
-
-EXEC sp_GetAllTags;

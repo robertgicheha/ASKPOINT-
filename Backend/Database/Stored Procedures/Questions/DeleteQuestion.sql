@@ -1,9 +1,13 @@
+USE StackOverflow
+GO
+
 CREATE PROCEDURE sp_DeleteQuestion
-    @QUESTIONID VARCHAR(255)
+    @questionId VARCHAR(255)
 AS
 BEGIN
-    SET NOCOUNT ON;
 
     DELETE FROM questions
-    WHERE questions_id = @QUESTIONID;
+    WHERE questions_id = @questionId;
+
+  SELECT * FROM questions WHERE questions_id = @questionId
 END

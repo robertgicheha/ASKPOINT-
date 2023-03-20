@@ -1,8 +1,11 @@
+USE StackOverflow
+GO
+
 CREATE OR ALTER PROCEDURE sp_DeleteComment
-    @comment_id INT
+    @commentId VARCHAR(255)
 AS
 BEGIN
-    DELETE FROM comments WHERE comment_id = @comment_id;
+    DELETE FROM comments WHERE comment_id = @commentId;
 END;
 
 

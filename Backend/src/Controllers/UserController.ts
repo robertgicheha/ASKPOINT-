@@ -4,8 +4,8 @@ import path from 'path'
 import jwt from 'jsonwebtoken'
 import {v4 as uid} from 'uuid'
 import { RequestHandler,Request,Response } from 'express'
-import { UserRegisterHelper, UserLogInHelper } from '../Helpers/UserHelper'
-import { DecodedData, User } from '../Interfaces/index'
+import { UserCreateHelper, UserLogInHelper,UserUpdateHelper} from '../Helpers/UserHelper'
+import { DecodedData, UserBody } from '../Models/user'
 import { DatabaseHelper } from "../DatabaseHelpers/index";
 
 const  _db = new DatabaseHelper()
@@ -14,24 +14,35 @@ dotenv.config({ path:path.resolve(__dirname, '../.env')})
 
 
 interface ExtendedRequest extends Request{
-  body:{Name:string , Email:string,Password:string, ConfirmPassword:string}
-  info?:DecodedData
+  body:{Name:string , Email:string,Password:string}
+  // params:{userId:string}
+
 }
 
 //REGISTER A USER
-export async function UserRegister(req:ExtendedRequest, res:Response){
+export const CreateUser = async (req: Request, res: Response) => {
   try {
     const userId =uid()
-    const{Name,Email,Password} = req.body
-    const {error} =UserRegisterHelper.validate(req.body)
+    const{Name,Email,Password,Role} = await UserCreateHelper.validateAsync(req.body)
+      
+  //   const user: UserBody= {
+  //     Name,
+  //     Email,
+  //     Password,
+  //     Role,
+  //     CreatedAt : new Date(),
+  //     IsDeleted: 0
+  // }
+
+    const {error} =UserCreateHelper.validate(req.body)
     if(error){
         return res.status(422).json(error.details[0].message)
     }
+
     const hashedPassword= await bcrypt.hash(Password,10)
 
-
-    ///check if email exist
-    await _db.exec('sp_registerUser', {userId, Name:Name, Email:Email, password:hashedPassword})
+    ///create user
+    await _db.exec(' createuser', {userId, Name:Name, Email:Email, password:hashedPassword})
     return res.status(201).json({message:'User has been registered successfully'})
 
 } 
@@ -42,7 +53,7 @@ catch (error) {
 
 
 // USER LOGIN
-export async function UserLogin(req:ExtendedRequest, res:Response){
+export async function UserLogin(req:Request, res:Response){
   try {
       const{Email,Password} = req.body
       const {error} =UserLogInHelper.validate(req.body)
@@ -50,7 +61,7 @@ export async function UserLogin(req:ExtendedRequest, res:Response){
           return res.status(422).json(error.details[0].message)
       }
   
-      const user:User[]= await (await _db.exec('sp_GetUserbyEmail', {Email} )).recordset
+      const user:UserBody[]= await (await _db.exec('sp_GetUserbyEmail', {Email} )).recordset
           if(!user[0]){
            return res.status(404).json({error:'User Has Not Been Found'})
           }
@@ -66,12 +77,47 @@ export async function UserLogin(req:ExtendedRequest, res:Response){
       })
       
       const token = jwt.sign(payload[0], process.env.SECRETKEY as string , {expiresIn:'1d'})
-      return res.status(200).json({message:'User has Logged In Successfully', token, Name:user[0].userame , Role:user[0].Role})
+      return res.status(200).json({message:'User has Logged In Successfully', token, Name:user[0].username , Role:user[0].Role})
    
   } catch (error) {
       res.status(500).json(error) 
   }
   }
+
+
+  //UPDATE USER
+  export const UpdateUser  = async (req: Request, res: Response) =>{
+    try {
+      const userId =uid()
+      const{Name,Email,Password} = req.body
+        
+    //   const user: UserBody= {
+    //     Name,
+    //     Email,
+    //     Password,
+    //     Role,
+    //     CreatedAt : new Date(),
+    //     IsDeleted: 0
+    // }
+  
+      const {error} =UserUpdateHelper.validate(req.body)
+      if(error){
+          return res.status(422).json(error.details[0].message)
+      }
+  
+      const hashedPassword= await bcrypt.hash(Password,10)
+  
+      ///Update user
+      await _db.exec(' sp_UpdateUser', {userId, Name:Name, Email:Email, Password:hashedPassword})
+      return res.status(201).json({message:'User has been updated successfully'})
+  
+  } 
+  catch (error) {
+       res.status(500).json(error) 
+  }
+  }
+  
+
 
 // Login 
 // export async function UserLogin(req:ExtendedRequest,res:Response) {
@@ -110,27 +156,27 @@ export async function UserLogin(req:ExtendedRequest, res:Response){
 // }
   
 //HOMEPAGE
-export async function Homepage(req:ExtendedRequest,res:Response) {
-  try {
-    if(req.info){
-      console.log(req.info.Name);
+// export async function Homepage(req:ExtendedRequest,res:Response) {
+//   try {
+//     if(req.info){
+//       console.log(req.info.Name);
       
-      return res.status(200).json(`Greetings ${req.info.Name}`)
-    }  
-    else {
-      return res.status(400).json('Request does not contain valid info');
-    }
-  } catch (error) {
-    {
-      console.error(error);
-      return res.status(500).json('Internal Server Error');
-    }
-  }
-}
+//       return res.status(200).json(`Greetings ${req.info.Name}`)
+//     }  
+//     else {
+//       return res.status(400).json('Request does not contain valid info');
+//     }
+//   } catch (error) {
+//     {
+//       console.error(error);
+//       return res.status(500).json('Internal Server Error');
+//     }
+//   }
+// }
   // GET ALL USERS
-  export const GetAllUsers=async(req:ExtendedRequest,res:Response)=>{
+  export const GetAllUsers=async(req:Request,res:Response)=>{
     try {
-      const users:User[]= await (await  _db.exec('sp_GetAllUsers')).recordset
+      const users:UserBody[]= await (await  _db.exec('sp_GetAllUsers')).recordset
       if(!users){
          return res.status(404).json({error:'No User Has BeenFound'})
       }
@@ -143,10 +189,10 @@ export async function Homepage(req:ExtendedRequest,res:Response) {
     
   }
   // GET USER BY ID
-  export const GetUserById=async(req:ExtendedRequest,res:Response)=>{
+  export const GetUserById=async(req: Request,res:Response)=>{
     try {
       const userId = req.params.user_id
-      const user:User= await (await  _db.exec('sp_GetUserbyId', {userId})).recordset[0]
+      const user:UserBody= await (await  _db.exec('sp_GetUserbyId', {userId})).recordset[0]
       if(!user){
          return res.status(404).json({error:'User Is Not Found'})
       }
@@ -160,22 +206,22 @@ export async function Homepage(req:ExtendedRequest,res:Response) {
   }
 // GET USER PROFILE
 
-export const GetUserProfile=async(req:ExtendedRequest,res:Response)=>{
-  try {
-    // const id = req.params.userId
-    const userId = req.params.user_id as string;
-    const user:User= await (await  _db.exec('sp_GetUserProfile', {userId })).recordset[0]
-    if(!user){
-       return res.status(404).json({error:'No User has been  Found'})
-    }
+// export const GetUserProfile=async(req:ExtendedRequest,res:Response)=>{
+//   try {
+//     // const id = req.params.userId
+//     const userId = req.params.user_id as string;
+//     const user:UserBody= await (await  _db.exec('sp_GetUserProfile', {userId })).recordset[0]
+//     if(!user){
+//        return res.status(404).json({error:'No User has been  Found'})
+//     }
   
-    return res.status(200).json(user)
+//     return res.status(200).json(user)
   
-  } catch (error) {
-    return res.status(500).json(error)
-  }
+//   } catch (error) {
+//     return res.status(500).json(error)
+//   }
   
-  }
+//   }
 
 //  UPDATE USER PROFILE
 // export async function updateProfile(req:ExtendedRequest,res:Response){
@@ -198,14 +244,14 @@ export const GetUserProfile=async(req:ExtendedRequest,res:Response)=>{
 //   }
 
   // DELETE A USER
-  export const deleteUser=async(req:ExtendedRequest,res:Response)=>{
+  export const deleteUser=async(req:Request,res:Response)=>{
     try {
       const userId = req.params.user_id
-      const user:User= await (await  _db.exec('sp_sp_DeleteUser', {userId})).recordset[0]
+      const user:UserBody= await (await  _db.exec('sp_sp_DeleteUser', {userId})).recordset[0]
       if(!user){
          return res.status(404).json({error:'User Is Not Found'})
       }
-      await _db.exec('sp_deleteUser', {userId})
+      await _db.exec('sp_DeleteUser', {userId})
       return res.status(200).json({message:'User deleted successfully'})
     
     } catch (error) {

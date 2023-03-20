@@ -1,4 +1,5 @@
-
+USE StackOverflow
+GO
 CREATE  TABLE users (
   user_id  VARCHAR(255) PRIMARY KEY,
   username VARCHAR(50) NOT NULL,
@@ -6,10 +7,8 @@ CREATE  TABLE users (
   password VARCHAR(255) NOT NULL,
   Role VARCHAR(255) NOT NULL DEFAULT 'user',
   created_at DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP,
   isDeleted BIT NOT NULL DEFAULT 0,
 );
-
 
 drop table users
 

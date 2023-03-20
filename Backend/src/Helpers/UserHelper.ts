@@ -1,37 +1,28 @@
 import Joi, { ref } from "joi";
 
 // USER REGISTER Helper
-export const UserRegisterHelper = Joi.object({
+export const UserCreateHelper = Joi.object({
   Name: Joi.string().required(),
-  Email: Joi.string().required().email().messages({
-    "string.empty": "Please enter an email",
-    "string.email": "email is not valid",
-  }),
-  Password: Joi.string().required().pattern(new 
-    RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*]).{8,}$')
-    ),
-    ConfirmPassword:Joi.equal(ref('Password'))
+  Email: Joi.string().required(),
+  Password: Joi.string().required(),
+  
 });
 
 // LOGIN Helper
 export const UserLogInHelper = Joi.object({
-  Email: Joi.string().required().email().messages({
-    "string.empty": "Please provide an email",
-    "string.email": "Invalid email",
-  }),
-  Password: Joi.string().required().messages({
-    "string.empty": "Please provide a Password",
-    
-  }),
+  Email: Joi.string().required(),
+  Password: Joi.string().required()
 });
 
-// RECOVER PASSWORD Helper
-// export const UserForgotPasswordHelper = Joi.object({
-//   email: Joi.string().required().email().messages({
-//     "string.empty": "Please enter an email",
-//     "string.email": " email is not valid",
-//   }),
-// });
+
+export const UserUpdateHelper = Joi.object({
+  Name: Joi.string().required(),
+  Email: Joi.string().required(),
+  Password: Joi.string().required(),
+ 
+ 
+});
+
 
 
 

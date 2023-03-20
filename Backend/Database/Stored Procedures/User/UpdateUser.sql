@@ -1,24 +1,21 @@
-CREATE PROCEDURE sp_UpdateUser(
+USE StackOverflow
+GO
+
+
+CREATE OR ALTER  PROCEDURE sp_UpdateUser(
     @userId  VARCHAR(255),
-    @Name NVARCHAR(255) = NULL,
-    @Email NVARCHAR(255) = NULL,
-    @Password NVARCHAR(255) = NULL,
-    @Role VARCHAR = 'user',
-    @isDeleted BIT = 0
+    @Name VARCHAR(255),
+    @Email VARCHAR(255) ,
+    @Password VARCHAR(255),
+    @CreatedAt DATE,
+    @ROLE VARCHAR(255) = 'user',
+    @IsDeleted BIT = 0
 )
 AS
 BEGIN
-    UPDATE users
-        SET username = COALESCE(@Name, username),
-        Email = COALESCE(@Email, email),
-        password = COALESCE(@Password, password),
-        Role = COALESCE(@Role, Role),
-        isDeleted = COALESCE(@isDeleted, isDeleted),
-        updatedAt = GETDATE()
-        WHERE user_id= @userId;
-    SELECT *
-    FROM users
-    WHERE user_id = @userId;
+ IF EXISTS (SELECT * FROM users WHERE  user_id = @userId)
+        UPDATE users SET username = @name, email = @Email, password = @Password, created_at = @CreatedAt, Role=@ROLE, isDeleted = @IsDeleted WHERE user_id = @userId
+        SELECT * FROM users WHERE user_id = @userId
 END
 
-DROP PROCEDURE IF EXISTS sp_UpdateUser;
+-- DROP PROCEDURE IF EXISTS sp_UpdateUser;

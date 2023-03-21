@@ -1,12 +1,7 @@
-USE StackOverflow
-GO
 
-
-CREATE  PROCEDURE sp_GetUserbyId (@userId  VARCHAR(255))
+CREATE OR ALTER PROCEDURE getUserById
+@userid VARCHAR ( 255 )
 AS
 BEGIN
-    SELECT *
-    FROM users
-    WHERE user_id = @userId
+SELECT * FROM users WHERE userid = @userid
 END
-

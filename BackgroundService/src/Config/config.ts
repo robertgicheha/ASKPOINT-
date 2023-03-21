@@ -17,7 +17,7 @@ export const sqlConfig = {
     idleTimeoutMillis: 30000
   },
   options: {
-    encrypt: true, // for azure
+    encrypt: false, // for azure
     trustServerCertificate: true // change to true for local dev / self-signed certs
   }
 }
@@ -31,7 +31,7 @@ const checkConnection =async () => {
             
         }
         if (x.connected){
-            console.log("Connected to the Database");
+            console.log("Successful Connection to Database");
             
         }
         

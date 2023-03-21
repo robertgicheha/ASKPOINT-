@@ -1,18 +1,15 @@
 
-const Joi = require('joi');
+import Joi from "joi";
+import TagBody from "../Models/tag";
 
+const tagStructure = Joi.object({
+    tag: Joi.string().required(),
+    created_at: Joi.string().required(),
+    tagid: Joi.string().required()
+})
 
-// create tag helper
-export const generateTag = Joi.object({
-   
-    Tag: Joi.string().required(),
-    CreatedAt:Joi.date().required()
-   
-  });
+const validateTag = (tag:TagBody) => {
+    return tagStructure.validate(tag)
+}
 
-// update tag helper
-export const UpdateTag = Joi.object({
-    Tag: Joi.string().required(),
-    CreatedAt: Joi.date().required()
-  
-});
+export default validateTag

@@ -1,8 +1,6 @@
-USE StackOverflow
-GO
 
-CREATE OR ALTER PROCEDURE sp_GetAllAnswerVotes
+CREATE OR ALTER PROCEDURE getAllAnswerVotes
 AS
 BEGIN
-    SELECT * FROM AnswerVote
+    SELECT * FROM answervotes
 END

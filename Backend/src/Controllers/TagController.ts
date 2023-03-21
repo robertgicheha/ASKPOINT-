@@ -1,16 +1,16 @@
 import path from "path";
 import dotenv from "dotenv";
 import { v4 as uid } from "uuid";
-import {generateTag,UpdateTag} from "../Helpers/TagHelper";
+import validateTag from "../Helpers/TagHelper";
 import { RequestHandler , Request, Response } from 'express';
-import { DatabaseHelper } from '../DatabaseHelpers/index';
-import { TagBody } from '../Models/tag';
+import  DatabaseHelper  from '../DatabaseHelpers/index';
+import TagBody  from '../Models/tag';
 
 
-interface ExtendedRequest extends Request {
-      body: {Tag: string; CreatedAt:Date;};
-    params: { tagId: string };
-  }
+// interface ExtendedRequest extends Request {
+//       body: {Tag: string; CreatedAt:Date;};
+//     params: { tagId: string };
+//   }
   
   const _db = new DatabaseHelper();
   
@@ -18,101 +18,26 @@ interface ExtendedRequest extends Request {
 
 
 //CREATE A TAG
-export const CreateTag  = async (req: ExtendedRequest, res: Response) => {
-
+export const createTag:RequestHandler = async (req: Request, res: Response) => {
     try {
-        const tagId = req.params.tagId
+        const { tag } = req.body;
+        const newtag = new TagBody(
+            uid(),
+            tag,
+            new Date().toISOString(),
 
-        const { Tag, CreatedAt} = await generateTag.validateAsync(req.body)
-        
-        const tag: TagBody = {
-            tagId : uid(),
-            Tag,
-            CreatedAt: new Date()
-          };
-
-        const { error } = generateTag.validateTag(tag);
+        );
+        const { error } = validateTag(newtag);
         if (error) {
             return res.status(400).json({ message: error.details[0].message });
         }
-
-        const tagcreate = await _db.exec('sp_CreateTag', {tagId:req.params.tagId,Tag:Tag,CreatedAt });
-        return res.status(201).json(tagcreate);
-
-      } catch (error) {
-        return res.status(500).json(error);
-      }
-}
-
-
-// UPDATE TAG
-
-export const UpdateTags  =  async(req: ExtendedRequest, res: Response) => {
-    try{
-        const tagId = req.params.tagId
-
-        const {  Tag, CreatedAt} = await UpdateTag.validateAsync(req.body)
-
-        const tag: TagBody = {
-            tagId : uid(),
-            Tag,
-            CreatedAt: new Date()
-          };
-
-          const { error } = UpdateTag.validateTag(tag);
-          if (error) {
-              return res.status(400).json({ message: error.details[0].message });
-          }
-
-
-        //Check if Tag exsists
-
-        const GetTag:TagBody= (await _db.exec('sp_GetTagById', {tagId} )).recordset[0]
-        if(GetTag){
-            // console.log(GetTag);
+        
+        const tagCreated = await _db.exec("createTag", {tagid: newtag.tagid,tag: newtag.tag, created_at: newtag.created_at,});
+        if (tagCreated) {
             
-            await _db.exec(' sp_UpdateTag', {tagId,Tag:Tag,CreatedAt})
-
-            return res.status(200).json({message:'The Tag has been updated successfully'})
-
+            return res.status(201).json(tagCreated);
         }
-        return res.status(404).json({error:'Tag Has Not Been Found'}) 
-
-    }catch (error) {
-        res.status(500).json(error)
-}
-}
-
-
-// GET TAG BY ID
-
-export const getTagById  = async (req: ExtendedRequest, res: Response) => {
-    try {
-        const  tagId  = req.params.tagId;
-
-        const onetag = await _db.exec('sp_GetTagById', { tagId });
-        if (onetag) {
-            return res.status(200).json(onetag);
-        }
-
-        return res.status(400).json({ message: "Tag Has Not Been Found" });
-
-    } catch (error) {
-        return res.status(500).json({ message: "error" });
-    }
-}
-
-
-
-//GET ALL TAGS
-export const getAllTags = async (req: ExtendedRequest, res: Response) => {
-    try {
-       
-        const alltags = await _db.exec(' sp_GetAllTags', {});
-        if (alltags) {
-            return res.status(200).json(alltags);
-        }
-        return res.status(400).json({ message: "All Tags Not Found" });
+        return res.status(400).json({ message: "Tag  was not created" });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: "error" });
@@ -120,26 +45,95 @@ export const getAllTags = async (req: ExtendedRequest, res: Response) => {
 }
 
 
-// DELETE TAG
-
-export const deleteTag  = async (req: ExtendedRequest, res: Response) => {
+export const GetAllTags:RequestHandler = async (req: Request, res: Response) => {
     try {
-        const tagId  = req.params.tagId;
+        
+        const tags = await _db.exec("getAllTags", {});
+        if (tags) {
+            return res.status(200).json(tags);
+        }
+        return res.status(400).json({ message: "Tags were  not found" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: " error" });
+    }
+}
 
-        // get tag by id
-        const tagDelete: TagBody = await _db.exec("sp_GetTagById", { tagId }) as unknown as TagBody;
-        if (!tagDelete) {
-            return res.status(400).json({ message: "Tag  was not found" });
+// GET TAG BY ID
+
+export const GetTagById:RequestHandler = async (req: Request, res: Response) => {
+    try {
+        const { tagid } = req.params;
+    
+        const tag = await _db.exec("getTagById", { tagid });
+        if (tag) {
+            return res.status(200).json(tag);
+        }
+        return res.status(400).json({ message: "Tag  was not found" });
+    } catch (error) {
+        return res.status(500).json({ message: " error" });
+    }
+}
+
+// UPDATE TAG
+
+export const updateTag:RequestHandler = async (req: Request, res: Response) => {
+    try {
+        const { tagid } = req.params;
+        // GET TAG
+        const tagUpdate: TagBody[] = await _db.exec("getTagById", { tagid }) as unknown as TagBody[];
+    
+        if (!tagUpdate) {
+            return res.status(400).json({ message: "Tag was not found" });
+        }
+        
+        const { tag } = req.body;
+        const tagtwo = new TagBody(
+            tagid,
+            tag,
+            new Date().toISOString(),
+            
+        );
+        // console.log(TagBody);
+        const { error } = validateTag(tagtwo);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
         }
        
-        // delete tag
+        const updatedTag = await _db.exec("createTag", {
+            tagid: tagtwo.tagid,
+            tag: tagtwo.tag,
+            created_at: tagtwo.created_at,
+        });
 
-        const deletedTag = await _db.exec('sp_DeleteTag',  { tagId  });
-        if (deletedTag) {
-            return res.status(200).json({ message: "Tag  was deleted" });
+        if (updatedTag) {
+            return res.status(200).json(updatedTag);
         }
-        return res.status(400).json({ message: "Tag Has NOT Been deleted" });
+        return res.status(400).json({ message: "Tag  was not updated" });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: " error" });
+    }
+}
 
+
+// DELETE A TAG
+
+export const deleteTag:RequestHandler = async (req: Request, res: Response) => {
+    try {
+        const { tagid } = req.params;
+        // get tag by id
+        const tagToDelete: TagBody = await _db.exec("getTagById", { tagid }) as unknown as TagBody;
+        if (!tagToDelete) {
+            return res.status(400).json({ message: "Tag not found" });
+        }
+        
+        // delete tag
+        const deletedTag = await _db.exec("deleteTag", { tagid });
+        if (deletedTag) {
+            return res.status(200).json({ message: "Tag deleted" });
+        }
+        return res.status(400).json({ message: "Tag was  not deleted" });
     } catch (error) {
         return res.status(500).json({ message: " error" });
     }

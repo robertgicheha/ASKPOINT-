@@ -1,8 +1,7 @@
-USE StackOverflow
-GO
-CREATE OR ALTER PROCEDURE sp_GetAnswerVoteById
-    @voteId VARCHAR ( 255 )
+
+CREATE OR ALTER PROCEDURE getAnswerVoteById
+    @voteid VARCHAR ( 255 )
 AS
 BEGIN
-    SELECT * FROM AnswerVote WHERE vote_id =  @voteId
+    SELECT * FROM answervotes WHERE voteid = @voteid
 END

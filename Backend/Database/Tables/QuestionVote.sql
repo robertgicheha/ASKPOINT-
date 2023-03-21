@@ -1,17 +1,14 @@
-USE StackOverflow
-GO
 
 
-CREATE TABLE QuestionVote
+CREATE TABLE questionvotes
 (
-    vote_id VARCHAR(255) PRIMARY KEY ,
-    user_id VARCHAR(255) NOT NULL,
-    questions_id VARCHAR(255) NOT NULL,
-    value INT NOT NULL,
-     created_at DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id ) ON DELETE CASCADE,
-    FOREIGN KEY (questions_id) REFERENCES questions( questions_id),
-);
- 
+    voteid VARCHAR ( 255 ) PRIMARY KEY ,
+    vote INT NOT NULL ,
+    created_at DATETIME NOT NULL DEFAULT GETDATE(),
+    userid VARCHAR ( 255 ) NOT NULL ,
+    questionid VARCHAR ( 255 ) NOT NULL ,
+    FOREIGN KEY (userid) REFERENCES users(userid) ON DELETE CASCADE,
+    FOREIGN KEY (questionid) REFERENCES questions(questionid)
+   
 
- DROP TABLE QuestionVote
+);

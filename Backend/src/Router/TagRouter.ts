@@ -1,12 +1,12 @@
 import { Router } from "express";
-import { CreateTag, getTagById, UpdateTags, deleteTag,getAllTags } from "../Controllers/TagController";
+import { createTag, GetTagById, updateTag, deleteTag,GetAllTags } from "../Controllers/TagController";
 
 const TagRouter = Router();
 
-TagRouter.post("/createtag", CreateTag);
-TagRouter.put("/update/:id", UpdateTags);
-TagRouter.get("/:id", getTagById);
-TagRouter.get("/getall", getAllTags);
+TagRouter.post("/createtag", createTag);
+TagRouter.put("/update/:id", updateTag);
+TagRouter.get("/:id", GetTagById);
+TagRouter.get("/getall", GetAllTags);
 TagRouter.delete("/delete/:id", deleteTag);
 
 

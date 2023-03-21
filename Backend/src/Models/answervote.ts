@@ -1,9 +1,22 @@
 //AnswerVoteInterface
-export interface AnswerVoteBody{
-    voteId: string;
-    userId: string;
-    answerId: string;
-    Value: number;
-    CreatedAt: Date;
+class AnswerVoteBody{
+    voteid: string;
+    created_at: string;
+    userid: string;
+    answerid: string;
+    vote: number;
+
+    
+
+    constructor(voteid: string,  created_at: string, userid: string, answerid: string ,vote: number,) {
+        this.voteid = voteid;
+        this.created_at = created_at;
+        this.userid = userid;
+        this.answerid =answerid;
+        this.vote = vote;
+    }
+
 
     }
+    
+    export default AnswerVoteBody

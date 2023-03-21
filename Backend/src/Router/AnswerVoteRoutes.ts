@@ -1,14 +1,14 @@
 import { Router } from "express";
-import { CreateAnswerVote, GetAllAnswerVotes, GetAnswerVoteById, UpdateAnswerVote } from "../Controllers/AnswerVoteController";
+import { createAnswerVote, GetAllAnswerVotes, GetAnswerVoteById, updateAnswerVote } from "../Controllers/AnswerVoteController";
 
 
 const AnswerVoteRouter = Router();
 
 
-AnswerVoteRouter.post("/createvote", CreateAnswerVote);
+AnswerVoteRouter.post("/createvote", createAnswerVote);
 AnswerVoteRouter.get("/getall", GetAllAnswerVotes);
 AnswerVoteRouter.get("/:id", GetAnswerVoteById);
-AnswerVoteRouter.put("/update/:id", UpdateAnswerVote);
+AnswerVoteRouter.put("/update/:id", updateAnswerVote);
 
 
 export default AnswerVoteRouter;

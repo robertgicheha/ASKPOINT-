@@ -1,9 +1,0 @@
-USE STACKOVERFLOW;
-GO
- 
-CREATE OR ALTER PROCEDURE getAnswerVoteById
-    @voteId VARCHAR ( 255 )
-AS
-BEGIN
-    SELECT * FROM QuestionVote WHERE vote_id = @voteId 
-END

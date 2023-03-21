@@ -1,28 +1,23 @@
-import Joi, { ref } from "joi";
 
-// USER REGISTER Helper
-export const UserCreateHelper = Joi.object({
-  Name: Joi.string().required(),
-  Email: Joi.string().required(),
-  Password: Joi.string().required(),
-  
-});
+import Joi from "joi";
+import UserBody from "../Models/user";
 
-// LOGIN Helper
-export const UserLogInHelper = Joi.object({
-  Email: Joi.string().required(),
-  Password: Joi.string().required()
-});
+const userStructure = Joi.object({
+    name: Joi.string().required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+    role: Joi.string().required(),
+    is_deleted: Joi.string().required(),
+    is_sent: Joi.string().required(),
+    created_at: Joi.string().required(),
+    userid: Joi.string().required()
+})
 
+const validateUser = (user:UserBody) => {
+    return userStructure.validate(user)
+}
 
-export const UserUpdateHelper = Joi.object({
-  Name: Joi.string().required(),
-  Email: Joi.string().required(),
-  Password: Joi.string().required(),
- 
- 
-});
-
+export default validateUser
 
 
 

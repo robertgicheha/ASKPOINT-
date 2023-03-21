@@ -6,50 +6,44 @@ POST  http://localhost:4000/user/register
 Content-Type: application/json
 
 {
-    "Name":"me",
-    "Email":"roe@gmail.com",
-    "Password":"@me2023"
-    
+    "name":"helo",
+    "email":"helo@gmail.com",
+    "password":"123456"
+
 }
 
 
 // USER LOGIN
 ###
-POST  http://localhost:4000/user/login
+POST  http://localhost:4000/users/login
 Content-Type: application/json
 
 {
-    "Email":"roe@gmail.com",
-    "Password":"TryMe!2023@"
+   
+   "Email":"tee@gmail.com",
+   "Password":"123456"
 
 }
-###
-//HOMEPAGE
-GET http://localhost:4000/user/home
-
-token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoiY2RhMzkxYmMtYmM0Ni00MGRlLTg2YWMtZmQ4OTM5YmNhYmMyIiwidXNlcm5hbWUiOiJyb2UiLCJlbWFpbCI6InJvZUBnbWFpbC5jb20iLCJSb2xlIjoidXNlciIsImNyZWF0ZWRfYXQiOiIyMDIzLTAzLTE3VDA5OjU2OjI3Ljg0M1oiLCJ1cGRhdGVkQXQiOiIyMDIzLTAzLTE3VDA5OjU2OjI3Ljg0M1oiLCJpc0RlbGV0ZWQiOmZhbHNlLCJpYXQiOjE2NzkwMzYzODYsImV4cCI6MTY3OTEyMjc4Nn0.EpyREJ_ifsa-bmOB1u5VWscfwXEqKTA344OGyhyo3tM
 
 ### UPDATE USER
-PUT http://localhost:4000/users/update/id
+PUT http://localhost:4000/users/update/445c7f1f-da37-44da-bdd9-6fb975e90f041
 Content-Type: application/json
 
 {
-    "Name":"roe",
-    "Email":"roe@gmail.com",
-    "Password":"TryMe!2023@"
+   
 }
 
 ### GET ALL USERS
-GET http://localhost:4000/users/allusers
+GET http://localhost:4000/users/all
 
 
 ### GET USER BY ID
-GET http://localhost:4000/users/id
+GET http://localhost:4000/users/445c7f1f-da37-44da-bdd9-6fb975e90f04
 
 
 ### DELETE USER
 
-DELETE http://localhost:4000/api/users/id
+PATCH  http://localhost:4000/users/delete/445c7f1f-da37-44da-bdd9-6fb975e90f04
 
 
                                                           #QUESTIONS
@@ -59,21 +53,28 @@ POST http://localhost:4000/question/create
 Content-Type: application/json
 
 {
-  
+  "question": "CSS AND HTML?",
+  "body": "Which needs the other",
+  "userid":"U002",
+  "views": 0
+
 }
 
 
 ### UPDATE QUESTION
-PUT http://localhost:4000/question/update/id
+PUT http://localhost:4000/question/update/"U002"
 Content-Type: application/json
 
 {
-
+  "question": " JAVSCRIPT AND HTML?",
+  "body": "Which needs the other",
+  "userid":"U002",
+  "views": 0
 
 }
 
 ### GET QUESTION BY ID
-GET http://localhost:4000/question/id
+GET http://localhost:4000/question/"U002"
 
 
 
@@ -88,32 +89,38 @@ DELETE http://localhost:4000/api/question/delete/Id
 
 
 
-                                                 //QUESTION VOTES
+                                //QUESTION VOTES
 
 ### CREATE QUESTION VOTE
-POST http://localhost:4000/api/questionvote/createvote
+POST http://localhost:4000/questionvote/createvote
 Content-Type: application/json
 
 {
 
+  "questionid":"Q001",
+  "vote": "1",
+  "userid":"U001"
+  
   
 }
 
 ### UPDATE QUESTION VOTE
-PUT http://localhost:4000/api/questionvote/update/id
+PUT http://localhost:4000/questionvote/update/id
 Content-Type: application/json
 
 {
-
+  "questionid":"Q001",
+  "userid":"U001",
+  "vote": -1
   
 }
 
 ### GET ALL QUESTION VOTES
-GET http://localhost:4000/api/questionvote/getall
+GET http://localhost:4000/questionvote/getall
 
 
 ### GET QUESTION VOTE BY ID
-GET http://localhost:4000/api/questionvote/getvote/id
+GET http://localhost:4000/questionvote/getvote/id
 
 
 
@@ -141,24 +148,32 @@ POST http://localhost:4000/answer/createanswer
 Content-Type: application/json
 
 {
-  
+  "answer": "Javascript needs css but css dosent need javascript",
+  "userid":"U002",
+  "questionid":"Q001",
+  "is_accepted": "1"
+
 
 }
-
-
 
 ### UPDATE ANSWER
 PUT http://localhost:400/answer/update/id
 Content-Type: application/json
 
 {
+{
+  "answer": "Javascript needs css but css dosent need javascript",
+  "userid":"U002",
+  "questionid":"Q001",
+  "is_accepted": "0"
 
+}
 
 }
 
 
 ### DELETE ANSWER
-DELETE http://localhost:4000/answer/delete/id
+DELETE http://localhost:4000/answer/delete/"ANS1"
 
 
 
@@ -171,14 +186,18 @@ DELETE http://localhost:4000/answer/delete/id
 POST http://localhost:4000/answervote/createvote
 Content-Type: application/json
 {
-  
+  "userid":"U002",
+  "answerid":"ANS1",
+  "vote": 1
 }
 
 ### UPDATE ANSWER VOTE
 PUT http://localhost:4000/answervote/update/id
 Content-Type: application/json
 {
-  
+  "userid":"U002",
+  "answerid":"ANS1",
+  "vote": -1
 }
   
 ###GET ANSWER VOTE BY ID
@@ -215,14 +234,14 @@ Content-Type: application/json
 
 
 ### GET TAG BY ID
-GET http://localhost:4000/tag/
+GET http://localhost:4000/tag/"T001"
 
 ### GET ALL TAGS
 GET http://localhost:4000/tag/getall
 
 
 ### DELETE TAG
-DELETE http://localhost:4000/tag/delete/
+DELETE http://localhost:4000/tag/delete/"T001"
 
 
 
@@ -234,23 +253,30 @@ POST http://localhost:4000/comment/create
 Content-Type: application/json
 
 {
-  
+   "comment": "Good Answer",
+  "userid":"U002",
+  "answerid":"ANS1",
+  "is_deleted": "0"
 
 }
 
 
 ### UPDATE COMMENT
 
-PUT http://localhost:4000/comment/update/id
+PUT http://localhost:4000/comment/update/"UP01"
 Content-Type: application/json
 
 {
-  
+    "comment": "Good Answer",
+  "userid":"U002",
+  "answerid":"ANS1",
+  "is_deleted": "1"
+
 }
 
  ### GET COMMENT BY ID
 
-GET http://localhost:4000/comment/id
+GET http://localhost:4000/comment/"C001"
 
 ### GET ALL COMMENTS
 
@@ -258,7 +284,7 @@ GET http://localhost:4000/comment/getall
 
 
 ### DELETE COMMENT
-DELETE http://localhost:4000/comment/delete/id
+DELETE http://localhost:4000/comment/delete/"C001"
 
 
 

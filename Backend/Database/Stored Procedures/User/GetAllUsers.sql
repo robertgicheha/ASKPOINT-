@@ -1,7 +1,5 @@
-USE StackOverflow
-GO
 
-CREATE OR ALTER PROCEDURE sp_GetAllUsers
+CREATE OR ALTER PROCEDURE getAllUsers
 AS
 BEGIN
     SELECT * FROM users

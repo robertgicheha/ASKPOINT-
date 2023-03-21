@@ -1,10 +1,24 @@
 //Question Interface
-export interface QuestionBody {
-  questionId: string;
-  Title: string;
-  Body: string;
-  Tag: string;
-  userId: string;
-  CreatedAt: Date;
-  Views: number;
+class QuestionBody {
+  questionid: string;
+  question: string;
+  body: string;
+  created_at: string;
+  userid: string;
+  views: number;
+
+
+
+  constructor(questionid: string,question:string ,body:string, created_at: string,  userid: string,views: number,) {
+    this.questionid = questionid;
+    this.question= question
+    this.body = body;
+    this.created_at = created_at;
+    this.userid = userid;
+    this.views = views;
 }
+
+}
+
+
+export default QuestionBody

@@ -6,23 +6,22 @@ POST  http://localhost:4000/user/register
 Content-Type: application/json
 
 {
-    "name":"helo",
-    "email":"helo@gmail.com",
-    "password":"123456"
+    "name":"wamutitu",
+    "email":"shmalologicheha@gmail.com",
+    "password":"shmalolo123"
 
 }
 
 
 // USER LOGIN
 ###
-POST  http://localhost:4000/users/login
+POST  http://localhost:4000/user/login
 Content-Type: application/json
 
 {
    
-   "Email":"tee@gmail.com",
-   "Password":"123456"
-
+   "email":"shmalologicheha@gmail.com",
+    "password":"shmalolo123" 
 }
 
 ### UPDATE USER
@@ -33,17 +32,21 @@ Content-Type: application/json
    
 }
 
-### GET ALL USERS
-GET http://localhost:4000/users/all
 
-
-### GET USER BY ID
-GET http://localhost:4000/users/445c7f1f-da37-44da-bdd9-6fb975e90f04
+//GET USER BY ID
+###
+GET http://localhost:4000/user/39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b
 
 
 ### DELETE USER
 
-PATCH  http://localhost:4000/users/delete/445c7f1f-da37-44da-bdd9-6fb975e90f04
+PATCH  http://localhost:4000/user/delete/39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b
+ 
+
+ //GET ALL USERS
+###
+GET http://localhost:4000/user/allusers
+
 
 
                                                           #QUESTIONS
@@ -53,38 +56,40 @@ POST http://localhost:4000/question/create
 Content-Type: application/json
 
 {
-  "question": "CSS AND HTML?",
+  "question": "BREAD AND MANDAZI?",
   "body": "Which needs the other",
-  "userid":"U002",
+  "userid":"39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b",
   "views": 0
 
 }
 
 
 ### UPDATE QUESTION
-PUT http://localhost:4000/question/update/"U002"
+PUT http://localhost:4000/question/update/b2182e4b-5ebd-48d3-a9ab-f84b6acf222e
 Content-Type: application/json
 
 {
   "question": " JAVSCRIPT AND HTML?",
   "body": "Which needs the other",
-  "userid":"U002",
-  "views": 0
+  "userid":"39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b",
+  "views": 1
 
 }
 
-### GET QUESTION BY ID
-GET http://localhost:4000/question/"U002"
+### 
+# GET QUESTION BY ID
+GET http://localhost:4000/question/b2182e4b-5ebd-48d3-a9ab-f84b6acf222e
 
 
 
-### GET ALL QUESTIONS
-GET http://localhost:4000/questions/allquestions
+### 
+# GET ALL QUESTIONS
+GET http://localhost:4000/question/all
 
 
 
 ### DELETE QUESTION
-DELETE http://localhost:4000/api/question/delete/Id
+DELETE  http://localhost:4000/questions/delete/b2182e4b-5ebd-48d3-a9ab-f84b6acf222e
 
 
 
@@ -96,10 +101,9 @@ POST http://localhost:4000/questionvote/createvote
 Content-Type: application/json
 
 {
-
-  "questionid":"Q001",
-  "vote": "1",
-  "userid":"U001"
+  "vote": 1,
+   "userid":"39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b",
+  "questionid":"b2182e4b-5ebd-48d3-a9ab-f84b6acf222e"
   
   
 }
@@ -120,7 +124,7 @@ GET http://localhost:4000/questionvote/getall
 
 
 ### GET QUESTION VOTE BY ID
-GET http://localhost:4000/questionvote/getvote/id
+GET http://localhost:4000/questionvote/getvote/c1acebec-3504-4e0e-9153-d4076c2c60e9
 
 
 
@@ -138,10 +142,7 @@ GET http://localhost:4000/answer/allanswers
 
 
 ### GET ANSWER BY ID
-GET http://localhost:4000/answer/id
-
-
-
+GET http://localhost:4000/answer/f0e6d909-3750-4a90-9bef-cea17b39ea37
 
 ### CREATE ANSWER
 POST http://localhost:4000/answer/createanswer
@@ -149,23 +150,23 @@ Content-Type: application/json
 
 {
   "answer": "Javascript needs css but css dosent need javascript",
-  "userid":"U002",
-  "questionid":"Q001",
-  "is_accepted": "1"
+  "questionid":"b2182e4b-5ebd-48d3-a9ab-f84b6acf222e",
+  "userid":"39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b",
+  "is_accepted": "0"
 
 
 }
 
 ### UPDATE ANSWER
-PUT http://localhost:400/answer/update/id
+PUT http://localhost:400/answer/update/f0e6d909-3750-4a90-9bef-cea17b39ea37
 Content-Type: application/json
 
 {
 {
   "answer": "Javascript needs css but css dosent need javascript",
-  "userid":"U002",
-  "questionid":"Q001",
-  "is_accepted": "0"
+  "userid":"39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b",
+  "questionid":"b2182e4b-5ebd-48d3-a9ab-f84b6acf222e",
+  "is_accepted": "1"
 
 }
 
@@ -173,7 +174,7 @@ Content-Type: application/json
 
 
 ### DELETE ANSWER
-DELETE http://localhost:4000/answer/delete/"ANS1"
+DELETE http://localhost:4000/answer/delete/f0e6d909-3750-4a90-9bef-cea17b39ea37
 
 
 
@@ -182,15 +183,17 @@ DELETE http://localhost:4000/answer/delete/"ANS1"
                                          //ANSWER VOTES
 
 
- ### CREATE ANSWER VOTE
-POST http://localhost:4000/answervote/createvote
+### CREATE ANSWER VOTE
+POST http://localhost:4000/answervote/create
 Content-Type: application/json
-{
-  "userid":"U002",
-  "answerid":"ANS1",
-  "vote": 1
-}
 
+{
+   "vote": -1,
+   "userid":"39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b",
+  "answerid":"34752876-c68f-4927-8df5-57479d70cd73"
+  
+  
+}
 ### UPDATE ANSWER VOTE
 PUT http://localhost:4000/answervote/update/id
 Content-Type: application/json
@@ -220,12 +223,12 @@ POST http://localhost:4000/tag/createtag
 Content-Type: application/json
 
 {
-  
+  "tag":"CSS"
 }
 
 
 ### UPDATE TAG
-PUT http://localhost:4000/tag/update/
+PUT http://localhost:4000/tag/update/40f5caa6-1976-4a90-a016-ca239e79a77c
 Content-Type: application/json
 
 {
@@ -234,14 +237,14 @@ Content-Type: application/json
 
 
 ### GET TAG BY ID
-GET http://localhost:4000/tag/"T001"
+GET http://localhost:4000/tag/40f5caa6-1976-4a90-a016-ca239e79a77c
 
 ### GET ALL TAGS
 GET http://localhost:4000/tag/getall
 
 
 ### DELETE TAG
-DELETE http://localhost:4000/tag/delete/"T001"
+DELETE http://localhost:4000/tag/delete/40f5caa6-1976-4a90-a016-ca239e79a77c
 
 
 
@@ -254,10 +257,9 @@ Content-Type: application/json
 
 {
    "comment": "Good Answer",
-  "userid":"U002",
-  "answerid":"ANS1",
-  "is_deleted": "0"
-
+ "userid":"39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b",
+  "answerid":"34752876-c68f-4927-8df5-57479d70cd73"
+  
 }
 
 
@@ -267,24 +269,22 @@ PUT http://localhost:4000/comment/update/"UP01"
 Content-Type: application/json
 
 {
-    "comment": "Good Answer",
+  "comment": "Good Answer",
   "userid":"U002",
   "answerid":"ANS1",
   "is_deleted": "1"
 
 }
 
- ### GET COMMENT BY ID
+###
+GET http://localhost:4000/comment/67d08556-6953-4fa2-a6d7-92e438c27c00
 
-GET http://localhost:4000/comment/"C001"
-
-### GET ALL COMMENTS
-
+### GET ALL COMMENT
 GET http://localhost:4000/comment/getall
 
 
 ### DELETE COMMENT
-DELETE http://localhost:4000/comment/delete/"C001"
+DELETE http://localhost:4000/comment/delete/67d08556-6953-4fa2-a6d7-92e438c27c00
 
 
 

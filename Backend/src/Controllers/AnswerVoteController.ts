@@ -6,49 +6,48 @@ import { RequestHandler,Request,Response } from 'express'
 import DatabaseHelper  from '../DatabaseHelpers/index';
 import  AnswerVoteBody from '../Models/answervote'
 import validateAnswerVote from '../Helpers/AnswerVoteHelper'
-import { date } from 'joi'
 
 
+const _db = new DatabaseHelper();
 
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
-const  _db = new DatabaseHelper()
-
-dotenv.config({ path: path.resolve(__dirname, '../.env') })
-
-//CREATE AN ANSWER VOTE
+//CREATE AN QUESTION VOTE
 export const createAnswerVote: RequestHandler = async (req: Request, res: Response) => {
-    try {
-        // const { voteid } = req.params;
-        const { userid, answerid, vote, created_at } = req.body;
-        const ansVote = new AnswerVoteBody(
-            uid(),
-            userid,
-            answerid,
-            new Date().toISOString(),
-            vote,
-        );
-        const { error } = validateAnswerVote(ansVote);
-        if (error) {
-            return res.status(400).json({ message: error.details[0].message });
-        }
+  try {
+ 
+      const voteId = req.params;
+      const {voteid, answerid, userid, vote } = req.body;
 
-        // CREATE ANSWER VOTE
-        const answerVoteCreate = await _db.exec("createAnswerVote", {voteid: ansVote.voteid, userid: ansVote.userid,answerid: ansVote.answerid, vote:ansVote.vote.toString(), created_at: ansVote.created_at
-        });
+      const newquestionVote = new AnswerVoteBody(
+          uid(),
+          vote,
+          new Date().toISOString(),
+          userid,
+          answerid
+         
+      );
 
-        
-        if (answerVoteCreate) {
-            return res.status(200).json(answerVoteCreate);
-        }
-        else {
-            return res.status(500).json({ message: "AnswerVote not created" });
-        }
-    }
-    catch (err) {
-        console.log(err);
-        return res.status(500).json({ message: " ERROR" });
-    }
+      const { error } = validateAnswerVote(newquestionVote);
+      if (error) {
+          return res.status(400).json({ message: error.details[0].message });
+      }
+
+      const questionVoteCreated = _db.exec("createAnswerVote", {voteid: newquestionVote.voteid,vote: newquestionVote.vote.toString(),created_at:newquestionVote.created_at,userid: newquestionVote.userid,answerid: newquestionVote.answerid})
+      if (!questionVoteCreated) {
+        return res.status(400).json({ message: "AnswerVote not created" });
+      }else{
+        return res.status(201).json(newquestionVote);
+      }
+
+  }
+  catch (error: any) {
+
+      return res.status(500).json({ error });
+  }
+
 }
+
 // GET ALL ANSWER VOTES
 export const GetAllAnswerVotes: RequestHandler = async (req: Request, res: Response) => {
   try {

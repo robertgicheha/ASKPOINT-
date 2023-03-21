@@ -4,11 +4,12 @@ import Joi from "joi";
 
 
 const answerVoteStructure = Joi.object({
-    voteid: Joi.string().required(),
     vote: Joi.number().required(),
+    created_at: Joi.string().required(),
     userid: Joi.string().required(),
-    answerid: Joi.string().required,
-    createdat: Joi.string().required(),
+    answerid: Joi.string().required(),
+    voteid: Joi.string().required()
+ 
 })
 
 const validateAnswerVote = (answerVote:AnswerVoteBody) => {

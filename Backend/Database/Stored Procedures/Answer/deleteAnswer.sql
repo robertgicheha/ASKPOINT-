@@ -4,6 +4,7 @@ CREATE OR ALTER PROCEDURE deleteAnswer
 AS
 BEGIN
     DELETE answers  WHERE answerid = @answerid
-    SELECT * FROM answers WHERE answerid = @answerid
+
+    SELECT * FROM answers 
 END
 

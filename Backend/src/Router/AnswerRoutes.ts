@@ -7,7 +7,7 @@ const ansrouter = Router();
 // ROUTES FOR QUESTIONS
 ansrouter.route("/createanswer").post(createAnswer);
 ansrouter.route("/update/:id").post(updateAnswer);
-ansrouter.route("/delete/:id").patch(DeleteAnswer);
+ansrouter.route("/del/:id").delete(DeleteAnswer);
 ansrouter.route("/:id").get(GetAnswerById);
 ansrouter.route("/allanswers").get(GetAllAnswers);
 

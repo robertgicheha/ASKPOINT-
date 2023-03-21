@@ -48,14 +48,17 @@ export const createTag:RequestHandler = async (req: Request, res: Response) => {
 export const GetAllTags:RequestHandler = async (req: Request, res: Response) => {
     try {
         
-        const tags = await _db.exec("getAllTags", {});
-        if (tags) {
+        const tags = await _db.exec("getAllTags", {})
+        if (!tags) {
+            return res.status(400).json({ message: "Tags were  not found" });
+          
+        }else{
             return res.status(200).json(tags);
         }
-        return res.status(400).json({ message: "Tags were  not found" });
+       
     } catch (error) {
         console.log(error);
-        return res.status(500).json({ message: " error" });
+        return res.status(500).json({ error});
     }
 }
 
@@ -63,13 +66,16 @@ export const GetAllTags:RequestHandler = async (req: Request, res: Response) => 
 
 export const GetTagById:RequestHandler = async (req: Request, res: Response) => {
     try {
-        const { tagid } = req.params;
+        const  tagid  = req.params.id
     
         const tag = await _db.exec("getTagById", { tagid });
-        if (tag) {
+        if (!tag) {
+            return res.status(400).json({ message: "Tag  was not found" });
+          
+        }else{
             return res.status(200).json(tag);
         }
-        return res.status(400).json({ message: "Tag  was not found" });
+        
     } catch (error) {
         return res.status(500).json({ message: " error" });
     }
@@ -79,7 +85,7 @@ export const GetTagById:RequestHandler = async (req: Request, res: Response) => 
 
 export const updateTag:RequestHandler = async (req: Request, res: Response) => {
     try {
-        const { tagid } = req.params;
+        const tagid = req.params.id
         // GET TAG
         const tagUpdate: TagBody[] = await _db.exec("getTagById", { tagid }) as unknown as TagBody[];
     
@@ -121,19 +127,21 @@ export const updateTag:RequestHandler = async (req: Request, res: Response) => {
 
 export const deleteTag:RequestHandler = async (req: Request, res: Response) => {
     try {
-        const { tagid } = req.params;
+        const tagid  = req.params.id
         // get tag by id
         const tagToDelete: TagBody = await _db.exec("getTagById", { tagid }) as unknown as TagBody;
         if (!tagToDelete) {
             return res.status(400).json({ message: "Tag not found" });
+        }else{
+ // delete tag
+ const deletedTag = await _db.exec("deleteTag", { tagid });
+ if (deletedTag) {
+     return res.status(200).json({ message: "Tag deleted" });
+ }
+ return res.status(400).json({ message: "Tag was  not deleted" });
         }
         
-        // delete tag
-        const deletedTag = await _db.exec("deleteTag", { tagid });
-        if (deletedTag) {
-            return res.status(200).json({ message: "Tag deleted" });
-        }
-        return res.status(400).json({ message: "Tag was  not deleted" });
+       
     } catch (error) {
         return res.status(500).json({ message: " error" });
     }

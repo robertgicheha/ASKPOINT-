@@ -7,14 +7,16 @@ CREATE OR ALTER PROCEDURE createQuestionVote
     @questionid VARCHAR ( 255 )
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM questionvotes WHERE voteid = @voteid)
-    BEGIN
-        UPDATE questionvotes SET vote = @vote WHERE voteid = @voteid
-        SELECT * FROM questionvotes WHERE voteid = @voteid
-    END
-    ELSE
-    BEGIN
+   
         INSERT INTO questionvotes (voteid, vote, created_at,  userid, questionid) VALUES (@voteid, @vote, @created_at, @userid, @questionid)
         SELECT * FROM questionvotes WHERE voteid = @voteid
-    END
+  
 END
+
+ -- IF EXISTS (SELECT * FROM questionvotes WHERE voteid = @voteid)
+    -- BEGIN
+    --     UPDATE questionvotes SET vote = @vote WHERE voteid = @voteid
+    --     SELECT * FROM questionvotes WHERE voteid = @voteid
+    -- END
+    -- ELSE
+    -- BEGIN

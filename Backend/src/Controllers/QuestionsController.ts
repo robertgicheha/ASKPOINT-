@@ -20,7 +20,7 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') })
 export const createQuestion: RequestHandler = async (req: Request, res: Response) => {
 
     try {
- 
+    const questionid=uid()
       const { question, body, userid,views } = req.body;
       
       const questionone = new QuestionBody(
@@ -33,23 +33,24 @@ export const createQuestion: RequestHandler = async (req: Request, res: Response
     
      );
  
-     console.log(questionone);
+    //  console.log(questionone);
      
      const { error } = validateQuestion(questionone);
      if (error) {
          return res.status(400).json({ message: error.details[0].message });
      }
-     const newquestion = await _db.exec("createQuestion", {questionid: questionone.questionid, question: questionone.question,body: questionone.body, created_at: questionone.created_at.toString(),userid: questionone.userid,views: questionone.views.toString(),
+     const newquestion =  _db.exec("createQuestion", {questionid: questionone.questionid, question: questionone.question,body: questionone.body, created_at: questionone.created_at, userid: questionone.userid,views: questionone.views.toString(),
      });
  
-     if (newquestion) {
-         
-         return res.status(201).json({message: "Question Created Successfully"});
+     if (!newquestion) {
+        return res.status(400).json({ message: "Question was not created", });
+     }else{
+        return res.status(200).json({message:"Question Created Successfully", questionone});
      }
-     return res.status(400).json({ message: "Question was not created" });
- 
+    
+     
      } catch (error : any) {
-         return res.status(500).json({ message:"ERROR" });
+         return res.status(500).json({ error });
      }
  
  }
@@ -59,11 +60,11 @@ export const increaseQuestionViews : RequestHandler = async (req: Request, res: 
     try{
         const { questionid } = req.params;
 
-        const moreviews = _db.exec(" IncreaseViews", { questionid });
+        const moreviews:QuestionBody = _db.exec(" IncreaseViews", { questionid:questionid }) as unknown as QuestionBody;
         if (moreviews) {
             return res.status(200).json(moreviews);
         }
-        return res.status(404).json({ message: "Question was  not found" });
+        return res.status(404).json({ message: "Question was  not found"});
     }
     catch (error : any) {
         return res.status(500).json({ message: "ERROR" });
@@ -78,11 +79,11 @@ export const deleteQuestion : RequestHandler = async (req: Request, res: Respons
     
     try {
 
-        const { questionid } = req.params;
-        const Deletequestion= await _db.exec("deleteQuestion", { questionid });
+        const questionid  = req.params.id;
+        const Deletequestion=  _db.exec("deleteQuestion", { questionid }) 
 
-        if (Deletequestion) {
-            return res.status(200).json(Deletequestion);
+        if (await Deletequestion) {
+            return res.status(200).json({message:"Deleted successfully" ,Deletequestion});
         }
 
         return res.status(404).json({ message: "Questionwas not found" });
@@ -95,21 +96,20 @@ export const deleteQuestion : RequestHandler = async (req: Request, res: Respons
 
 // GET ALL OF THE QUESTIONS QUESTIONS
 
-export const GetAllQuestions : RequestHandler = async (req: Request, res: Response) => {
+export const GetAllQuestions  = async (req: Request, res: Response) => {
     try {
-     const questions = await _db.exec("getAllQuestions", {});
-
-     if (questions) {
-         return res.status(200).json(questions);
+    const questionid = req.params.id
+     const all =   _db.exec('getAllQuestions' , )
+     console.log(all)
+     if (!all) {
+        return res.status(404).json({ message: "Questions were not found" })
+     }else{
+        return res.status(200).json({message:"Questions Found"})
      }
-
-     return res.status(404).json({ message: "Questions were  not found" });
-
+     
     }
- 
       catch (error : any) {
-         console.log(error);
-         return res.status(500).json({ message:"ERROR" });
+         return res.status(500).json( error );
      }
 }
 
@@ -118,15 +118,17 @@ export const GetAllQuestions : RequestHandler = async (req: Request, res: Respon
 export const GetQuestionById : RequestHandler = async (req: Request, res: Response) => {
 
     try {
-        const { questionid } = req.params;
+        const questionid = req.params.id
+        const onequestion = await _db.exec("getQuestionById", { questionid})
 
-        const question = await _db.exec("getQuestionById", { questionid });
-
-        if (question) {
-            return res.status(200).json(question);
+        if (!onequestion){
+            return res.status(404).json({ message: "Question was  not found" });
+        } else{
+            return res.status(200).json(
+                { message:"Question was successfully found", onequestion}
+            );
         }
-        return res.status(404).json({ message: "Question was  not found" });
-
+        
     } catch (error : any) {
         return res.status(500).json({ message: "ERROR" });
     }
@@ -137,46 +139,46 @@ export const GetQuestionById : RequestHandler = async (req: Request, res: Respon
 // UPDATE A QUESTION
 export const updateQuestion : RequestHandler = async (req: Request, res: Response) => {
     try {
-        const { questionid } = req.params;
-    const questionUpdate:QuestionBody[] = await _db.exec("getQuestionById", { questionid }) as unknown as QuestionBody[];
+        const questionid  = req.params.id;
+    const questionUpdate= await  _db.exec("getQuestionById", { questionid })
 
     if (questionUpdate.length === 0) {
         return res.status(404).json({ message: "Question was not found" });
     }
     // console.log(questionUpdate)
-    const { question, body, user_id,views } = req.body;
+    const { question, body, userid,views } = req.body;
 
     const questiontwo = new QuestionBody(
         questionid,
         question,
         body,
         new Date(questionUpdate[0].created_at).toISOString(),
-        user_id,
+        userid,
         views,
     );
 
-    // console.log(questiontwo)
+    console.log(questiontwo)
 
     const { error } = validateQuestion(questiontwo);
     if (error) {
         return res.status(400).json({ message: error.details[0].message });
     }
 
-    const questionUpdated = await _db.exec("createQuestion", {questionid: questiontwo.questionid,question: questiontwo.question,body: questiontwo.body,created_at: questiontwo.created_at,user_id: questiontwo.userid, views:questiontwo.views.toString(),
+    const questionUpdated =  _db.exec("createQuestion", {questionid: questiontwo.questionid,question: questiontwo.question,body: questiontwo.body,created_at: questiontwo.created_at,user_id: questiontwo.userid, views:questiontwo.views.toString(),
     
     });
 
     // console.log(questionUpdated);
 
-    if (questionUpdated) {
+    if (!questionUpdated) {
         // return question created
-        return res.status(200).json(questionUpdated);
+        return res.status(400).json({ message: "Question  was not updated" })
     }
 
-    return res.status(400).json({ message: "Question  was not updated" });
-
+    
+    return res.status(200).json(questionUpdated);
     } catch (error : any) {
-        return res.status(500).json({ message: "ERROR" });
+        return res.status(500).json({error });
         
     }
 }

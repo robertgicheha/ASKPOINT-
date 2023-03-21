@@ -5,7 +5,7 @@ import { createAnswerVote, GetAllAnswerVotes, GetAnswerVoteById, updateAnswerVot
 const AnswerVoteRouter = Router();
 
 
-AnswerVoteRouter.post("/createvote", createAnswerVote);
+AnswerVoteRouter.post("/create",createAnswerVote);
 AnswerVoteRouter.get("/getall", GetAllAnswerVotes);
 AnswerVoteRouter.get("/:id", GetAnswerVoteById);
 AnswerVoteRouter.put("/update/:id", updateAnswerVote);

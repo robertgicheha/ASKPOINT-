@@ -39,26 +39,27 @@ export const UserRegister = async (req: Request, res: Response) => {
             return res.status(400).json({ message: "Error in user body" });
         }
 
-        const Registered = await _db.exec("createUser", {
+        const Registered = await _db.exec("insertUser", {
             userid: user.userid,
             name: user.name,
             email: user.email,
             password: user.password,
+            created_at: user.created_at.toString(),
+            is_sent: user.is_sent,
             role: user.role,
             is_deleted: user.is_deleted,
-            is_sent: user.is_sent,
-            created_at: user.created_at.toString()
+           
+           
         });
 
 
-
-        if(Registered){
-            res.status(200).json({message:"User registered successfully"})
-        }
-        else{
-            res.status(200).json({message:"Registration Failed"})
-        }
-        }
+        // if(Registered){
+        //     res.status(200).json({message:"User registered successfully"})
+        // }
+        // else{
+        //     res.status(200).json({message:"Registration Failed"})
+        // }
+        // }
         //    if(Registered){
         //     const token = Jwt.sign(user, process.env.SECRETKEY as string, {expiresIn: '1d'});
         //     res.status(200).json({status:"User registered successfully",
@@ -70,24 +71,24 @@ export const UserRegister = async (req: Request, res: Response) => {
         // }else{
         //     res.status(500).json({message:"There was an error creating user"})
         // }
-        // if (Registered) {
-        //     const token = jwt.sign(
-        //         { userid:user.userid, email: user.email, name: user.name },
-        //         process.env.JWT_SECRET as string,
-        //         {
-        //             expiresIn: "1d",
-        //         }
-        //     );
-        //     return res.status(201).json({ message: "User registered successfully", token, user });
-        // }
-        // else {
-        //     return res.status(500).json({ message: "Erro is registration" });
-        // }
+        if (Registered) {
+            const token = Jwt.sign(
+                { userid:user.userid, email: user.email, name: user.name },
+                process.env.JWT_SECRET as string,
+                {
+                    expiresIn: "1d",
+                }
+            );
+            return res.status(201).json({ message: "User registered successfully", token, user });
+        }
+        else {
+            return res.status(500).json({ message: "Error is registration" });
+        }
 
 
-
+    }
     catch (err: any) {
-        res.status(500).json({ message: "Server Error" });
+        res.status(500).json(err);
     }
 
 
@@ -98,7 +99,7 @@ export const LoginUser = async (req: Request, res: Response) => {
     try {
         const { email, password } = req.body;
 
-        const user: UserBody[] = await _db.exec("getUserByEmail", { email:email }) as unknown as UserBody[];
+        const user: UserBody[] = await _db.exec("getUserByEmail", { email }) as unknown as UserBody[];
 
         if (!user) {
             return res.status(400).json({ message: "User  was not found" });
@@ -123,7 +124,7 @@ export const LoginUser = async (req: Request, res: Response) => {
         return res.status(200).json({ message: "User Has logged In Successfully", token, user });
     }
     catch (err: any) {
-        res.status(500).json({ message: "Srerver Error" });
+        res.status(500).json({ err });
     }
 
 }
@@ -131,10 +132,10 @@ export const LoginUser = async (req: Request, res: Response) => {
 
   // GET ALL USERS
 
-  export const GetAllUsers = async (req: Request, res: Response) => {
+  export const GetAllUsers  = async (req: Request, res: Response) => {
     try {
        
-        const users: UserBody[] = await _db.exec("getAllUsers", {}) as unknown as UserBody[];
+        const users: UserBody[] = await _db.exec(" getAllUsers", {}) as unknown as UserBody[]
 
         if (!users) {
             return res.status(400).json({ message: "No users found" });
@@ -143,21 +144,21 @@ export const LoginUser = async (req: Request, res: Response) => {
         return res.status(200).json({ message: "All Users Found", users });
     }
     catch (err: any) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({ message: err });
     }
 
 }
   // GET USER BY ID
   export const GetUserById = async (req: Request, res: Response) => {
     try {
-        const { userid } = req.params;
-        const user: UserBody = await _db.exec("getUserById", { userid: userid }) as unknown as UserBody;
+        const userid = uid()
+        const user: UserBody[] = await _db.exec("getUserById", { userid }) as unknown as UserBody[];
 
         if (!user) {
             return res.status(400).json({ message: "User was  not found" });
         }
 
-        return res.status(200).json({ message: "Successfull", user });
+        return res.status(200).json({ message: "User Was Found", user });
     }
     catch (err: any) {
         res.status(500).json({ message: "Error" });
@@ -168,22 +169,21 @@ export const LoginUser = async (req: Request, res: Response) => {
   export const DeleteUser = async (req: Request, res: Response) => {
 
     try {
-        const { userid } = req.params;
+        const userid = uid()
 
-
-        const user: UserBody = await _db.exec("getUserById", { userid: userid }) as unknown as UserBody;
+        const user:UserBody[] = await _db.exec("getUserById", { userid }) as unknown as UserBody[];
 
         if (!user) {
             return res.status(400).json({ message: "User was Not found" });
         }
 
-        const deleted = await _db.exec("deleteUser", { userid: userid });
+        const deleted = await _db.exec("deleteUser", { userid });
 
         if (deleted) {
             return res.status(200).json({ message: "User was deleted successfully" });
         }
         else {
-            return res.status(500).json({ message: "error" });
+            return res.status(500).json({ message: "User was not deleted" });
         }
 
     }
@@ -196,8 +196,7 @@ export const LoginUser = async (req: Request, res: Response) => {
 //UPDATE USER
 export const UpdateUser = async (req: Request, res: Response) => {
     try {
-        const { userid } = req.params;
-        
+   const userid = uid()
         const user: UserBody[] = await _db.exec("getUserById", { userid: userid }) as unknown as UserBody[];
 
         if (!user) {

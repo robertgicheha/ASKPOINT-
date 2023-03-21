@@ -4,5 +4,6 @@ CREATE OR ALTER PROCEDURE deleteQuestion
 AS
 BEGIN
     DELETE questions  WHERE questionid =  @questionid
+    
     SELECT * FROM questions WHERE questionid =  @questionid
 END

@@ -13,7 +13,7 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
         const bearer = bearerHeader.split(" ");
         const bearerToken = bearer[1];
 
-        Jwt.verify(bearerToken,process.env.SECRETKEY as string, (err, authData) => {
+        Jwt.verify(bearerToken,process.env.JWT_SECRET as string, (err, authData) => {
             if (err) {
                 res.sendStatus(403);
             } else {

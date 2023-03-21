@@ -26,16 +26,19 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 //CREATE AN QUESTION VOTE
 export const createQuestionVote: RequestHandler = async (req: Request, res: Response) => {
   try {
-
+ 
       const voteId = req.params;
       const {voteid, questionid, userid, vote } = req.body;
 
       const newquestionVote = new QuestionVoteBody(
           uid(),
-          questionid,
-          userid,
           vote,
-          new Date().toISOString()
+          new Date().toISOString(),
+          userid,
+          questionid,
+         
+          
+          
       );
 
       const { error } = validateQuestionVote(newquestionVote);
@@ -43,17 +46,18 @@ export const createQuestionVote: RequestHandler = async (req: Request, res: Resp
           return res.status(400).json({ message: error.details[0].message });
       }
 
-      const questionVoteCreated = await _db.exec("createQuestionVote", {voteid: newquestionVote.voteid,questionid: newquestionVote.questionid,userid: newquestionVote.userid,vote: newquestionVote.vote.toString(),created_at:newquestionVote.created_at,
+      const questionVoteCreated = _db.exec("createQuestionVote", {voteid: newquestionVote.voteid,vote: newquestionVote.vote.toString(),created_at:newquestionVote.created_at,userid: newquestionVote.userid,questionid: newquestionVote.questionid
       });
-      if (questionVoteCreated) {
-          return res.status(201).json(questionVoteCreated);
+      if (!questionVoteCreated) {
+        return res.status(400).json({ message: "QuestionVote not created" });
+      }else{
+        return res.status(201).json(newquestionVote);
       }
 
-      return res.status(400).json({ message: "QuestionVote not created" });
   }
   catch (error: any) {
 
-      return res.status(500).json({ message: error.message });
+      return res.status(500).json({ error });
   }
 
 }
@@ -75,14 +79,19 @@ export const GetAllQuestionVotes: RequestHandler = async (req: Request, res: Res
 //GET QUESTION VOTE BY ID
 export const GetQuestionVoteById: RequestHandler = async (req: Request, res: Response) => {
   try {
-     
-      const questionVote = await _db.exec("getQuestionVoteById", { voteid: req.params.voteid });
-      if (questionVote) {
-          return res.status(200).json(questionVote);
+      const voteid = req.params.id
+      const questionVote = await _db.exec("getQuestionVoteById", { voteid });
+      if (!questionVote) {
+        return res.status(400).json({ message: "QuestionVote not found" });
+      }else{
+
+        return res.status(200).json(questionVote);
       }
-      return res.status(400).json({ message: "QuestionVote not found" });
+
+      
+      
   } catch (error: any) {
-      return res.status(500).json({ message: error.message });
+      return res.status(500).json({ error });
   }
 }
 

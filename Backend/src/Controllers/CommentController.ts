@@ -25,7 +25,8 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 export const createComment: RequestHandler = async (req: Request, res: Response) => {
   try{
 
-      const { commentid ,comment, userid, answerid,is_deleted } = req.body;
+   const commentid = uid()
+      const { comment, userid, answerid,is_deleted} = req.body;
     
       const Newcomment = new CommentBody(
           uid(),
@@ -35,7 +36,7 @@ export const createComment: RequestHandler = async (req: Request, res: Response)
           answerid,
           is_deleted
       );
-
+     
       // console.log(Newcomment);
             const { error } = validateComment(Newcomment);
       if (error) {
@@ -45,14 +46,14 @@ export const createComment: RequestHandler = async (req: Request, res: Response)
   
       // CREATE COMMENT
       
-      const commentCreate = await _db.exec("createComment", {commentid: Newcomment.commentid,comment: Newcomment.comment,created_at: Newcomment.created_at, userid:Newcomment.userid,is_deleted: Newcomment.is_deleted,answerid: Newcomment.answerid
-      });
+      const commentCreate = await _db.exec("createComment", {commentid: Newcomment.commentid,comment: Newcomment.comment,created_at: Newcomment.created_at, userid:Newcomment.userid,answerid: Newcomment.answerid, is_deleted: Newcomment.is_deleted});
 
-      if (commentCreate) {
-          return res.status(200).json(commentCreate);
+      if (!commentCreate) {
+        return res.status(500).json({ message:"Comment not created" });
       }
       else {
-          return res.status(500).json({ message: "ERROR" });
+        return res.status(200).json(Newcomment);
+          
       }
 
   }
@@ -69,13 +70,14 @@ export const GetCommentsById: RequestHandler = async (req: Request, res: Respons
       const { commentid } = req.params;
 
       // GET COMMENT
-      const comments = await _db.exec("getCommentById", { commentid: commentid });
+      const comments = await _db.exec("getCommentById", { commentid });
 
-      if (comments) {
-          return res.status(200).json(comments);
+      if (!comments) {
+         return res.status(500).json({ message: "Comment not created" });
       }
+      
       else {
-          return res.status(500).json({ message: "Comment not created" });
+          return res.status(200).json(comments);
       }
   }
   catch (error: any) {
@@ -89,11 +91,12 @@ export const GetAllComments : RequestHandler = async (req: Request, res: Respons
      
       // get all comments
       const comments = await _db.exec("getAllComments", {});
-      if (comments) {
-          return res.status(200).json(comments);
+      if (!comments) {
+        return res.status(500).json({ message: "Comments not found" });
+         
       }
       else {
-          return res.status(500).json({ message: "Comments not found" });
+        return res.status(200).json(comments);
       }
   }
   catch (error: any) {
@@ -159,15 +162,14 @@ export const DeleteComment: RequestHandler = async (req: Request, res: Response)
     
       const deletedComment:CommentBody = await _db.exec("deleteComment", { commentid: commentid }) as unknown as CommentBody;
 
-      if (deletedComment) {
-          return res.status(200).json(deletedComment);
-      }
+      if (!deletedComment) {
+        return res.status(500).json({ message: "Comment was not deleted" });
+      } 
       else {
-          return res.status(500).json({ message: "Comment was not deleted" });
+        return res.status(200).json(deletedComment);
       }
 
-
-  }
+    }
   catch(error: any){
       return res.status(500).json({ message:"Error" });
   }

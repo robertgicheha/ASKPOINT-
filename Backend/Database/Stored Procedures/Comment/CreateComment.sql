@@ -8,21 +8,23 @@ CREATE OR ALTER PROCEDURE createComment
     @is_deleted BIT
 AS
 BEGIN
-    IF EXISTS (SELECT * FROM comments WHERE commentid = @commentid)
-    BEGIN
-        UPDATE comments SET
-            comment = @comment,
-            created_at = @created_at,
-            userid = @userid,
-            answerid = @answerid,
-            is_deleted = @is_deleted
-        WHERE commentid = @commentid
-        SELECT * FROM comments WHERE commentid = @commentid
-    END
-    ELSE
-    BEGIN
+
         INSERT INTO comments (commentid, comment, created_at,  userid, answerid, is_deleted)
         VALUES (@commentid, @comment, @created_at, @userid, @answerid, @is_deleted)
         SELECT * FROM comments WHERE commentid = @commentid
-    END
+    
 END
+
+    -- IF EXISTS (SELECT * FROM comments WHERE commentid = @commentid)
+    -- BEGIN
+    --     UPDATE comments SET
+    --         comment = @comment,
+    --         created_at = @created_at,
+    --         userid = @userid,
+    --         answerid = @answerid,
+    --         is_deleted = @is_deleted
+    --     WHERE commentid = @commentid
+    --     SELECT * FROM comments WHERE commentid = @commentid
+    -- END
+    -- ELSE
+    -- BEGIN

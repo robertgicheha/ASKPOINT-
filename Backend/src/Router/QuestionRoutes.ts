@@ -10,7 +10,7 @@ questionrouter.route("/update/:id").post(updateQuestion);
 questionrouter.route("/delete/:id").patch(deleteQuestion);
 questionrouter.route("/:id").get( GetQuestionById);
 questionrouter.route("/views").post( increaseQuestionViews);
-questionrouter.route("/allquestions").get(GetAllQuestions);
+questionrouter.route("/all").get(GetAllQuestions);
 
 // questionrouter.get('/home',VerifyToken, Homepage)//protected Route
 

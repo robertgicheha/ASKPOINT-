@@ -1,21 +1,19 @@
-const Joi = require("joi");
+import  QuestionBody  from "../Models/question";
+import Joi from "joi";
 
-// create question helper
-export const QuestionGenerate = Joi.object({
-  Title: Joi.string().required(),
-  Tag: Joi.string().required(),
-  Body: Joi.string().required(),
-  userIid: Joi.string().required(),
-  CreatedAt: Joi.date(),
-  views: Joi.number()
-});
+const questionStructure = Joi.object({
+    question: Joi.string().required(),
+    body: Joi.string().required(),
+    created_at: Joi.string().required(),
+    userid: Joi.string().required(),
+    views: Joi.number().required(),
+    questionid: Joi.string().required()
+})
 
-// update question helpers
-export const QuestionUpdate = Joi.object({
-  Title: Joi.string(),
-  Tag: Joi.string(),
-  Body: Joi.string(),
-  userIid: Joi.string(),
-  CreatedAt: Joi.date(),
-  views: Joi.number()
-});
+
+const validateQuestion = (question:QuestionBody) => {
+
+    return questionStructure.validate(question)
+}
+
+export default validateQuestion

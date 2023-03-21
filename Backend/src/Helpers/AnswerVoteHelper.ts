@@ -1,22 +1,19 @@
-const Joi = require('joi');
+
+import  AnswerVoteBody from "../Models/answervote";
+import Joi from "joi";
 
 
-// create Vote validator
-export const GenerateVote = Joi.object({
-    // vote_id:Joi.string().required(),
-    userId: Joi.string().required(),
-    answerId: Joi.string().required(),
-    Value: Joi.string().required(),
-    CreatedAt: Joi.date().required()
-    
-  });
+const answerVoteStructure = Joi.object({
+    voteid: Joi.string().required(),
+    vote: Joi.number().required(),
+    userid: Joi.string().required(),
+    answerid: Joi.string().required,
+    createdat: Joi.string().required(),
+})
 
-// update vote validator
-export const UpdateVote = Joi.object({
+const validateAnswerVote = (answerVote:AnswerVoteBody) => {
+    return answerVoteStructure.validate(answerVote)
+}
 
-    // vote_id:Joi.string().required(),
-    answerId: Joi.string().required(),
-    userId: Joi.string().required(),
-    Value: Joi.string().required(),
-    CreatedAt: Joi.date().required()
-});
+
+export default validateAnswerVote

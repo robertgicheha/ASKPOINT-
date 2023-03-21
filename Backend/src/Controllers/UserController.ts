@@ -1,260 +1,246 @@
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import path from 'path'
-import jwt from 'jsonwebtoken'
+import Jwt from 'jsonwebtoken'
 import {v4 as uid} from 'uuid'
 import { RequestHandler,Request,Response } from 'express'
-import { UserCreateHelper, UserLogInHelper,UserUpdateHelper} from '../Helpers/UserHelper'
-import { DecodedData, UserBody } from '../Models/user'
-import { DatabaseHelper } from "../DatabaseHelpers/index";
+import  validateUser from '../Helpers/UserHelper'
+import DatabaseHelper from "../DatabaseHelpers/index";
+import UserBody from '../Models/user'
 
 const  _db = new DatabaseHelper()
 
 dotenv.config({ path:path.resolve(__dirname, '../.env')})
 
-
-interface ExtendedRequest extends Request{
-  body:{Name:string , Email:string,Password:string}
-  // params:{userId:string}
-
-}
-
 //REGISTER A USER
-export const CreateUser = async (req: Request, res: Response) => {
-  try {
-    const userId =uid()
-    const{Name,Email,Password,Role} = await UserCreateHelper.validateAsync(req.body)
-      
-  //   const user: UserBody= {
-  //     Name,
-  //     Email,
-  //     Password,
-  //     Role,
-  //     CreatedAt : new Date(),
-  //     IsDeleted: 0
-  // }
+export const UserRegister = async (req: Request, res: Response) => {
+    try {
+        const userid = uid()
+        const { name, email, password, } = req.body;
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+       
+        const user = new UserBody (
+            uid(),
+            name,
+            email,
+            hashedPassword,
+            new Date().toISOString(),
+            "0",
+            "0",
+            "0",
 
-    const {error} =UserCreateHelper.validate(req.body)
-    if(error){
-        return res.status(422).json(error.details[0].message)
+        );
+        console.log(user);
+        
+        const { error } = validateUser(user);
+
+        if (error) {
+            return res.status(400).json({ message: "Error in user body" });
+        }
+
+        const Registered = await _db.exec("createUser", {
+            userid: user.userid,
+            name: user.name,
+            email: user.email,
+            password: user.password,
+            role: user.role,
+            is_deleted: user.is_deleted,
+            is_sent: user.is_sent,
+            created_at: user.created_at.toString()
+        });
+
+
+
+        if(Registered){
+            res.status(200).json({message:"User registered successfully"})
+        }
+        else{
+            res.status(200).json({message:"Registration Failed"})
+        }
+        }
+        //    if(Registered){
+        //     const token = Jwt.sign(user, process.env.SECRETKEY as string, {expiresIn: '1d'});
+        //     res.status(200).json({status:"User registered successfully",
+        //     data:{
+        //         token,
+        //         user
+        //     }
+        // });
+        // }else{
+        //     res.status(500).json({message:"There was an error creating user"})
+        // }
+        // if (Registered) {
+        //     const token = jwt.sign(
+        //         { userid:user.userid, email: user.email, name: user.name },
+        //         process.env.JWT_SECRET as string,
+        //         {
+        //             expiresIn: "1d",
+        //         }
+        //     );
+        //     return res.status(201).json({ message: "User registered successfully", token, user });
+        // }
+        // else {
+        //     return res.status(500).json({ message: "Erro is registration" });
+        // }
+
+
+
+    catch (err: any) {
+        res.status(500).json({ message: "Server Error" });
     }
 
-    const hashedPassword= await bcrypt.hash(Password,10)
 
-    ///create user
-    await _db.exec(' createuser', {userId, Name:Name, Email:Email, password:hashedPassword})
-    return res.status(201).json({message:'User has been registered successfully'})
-
-} 
-catch (error) {
-     res.status(500).json(error) 
 }
-}
-
 
 // USER LOGIN
-export async function UserLogin(req:Request, res:Response){
-  try {
-      const{Email,Password} = req.body
-      const {error} =UserLogInHelper.validate(req.body)
-      if(error){
-          return res.status(422).json(error.details[0].message)
-      }
-  
-      const user:UserBody[]= await (await _db.exec('sp_GetUserbyEmail', {Email} )).recordset
-          if(!user[0]){
-           return res.status(404).json({error:'User Has Not Been Found'})
-          }
-
-      const valid= await bcrypt.compare(Password, user[0].password)
-      if(!valid){
-          return res.status(404).json({error:'User Not found'})
-      }
-  
-      const payload= user.map(item=>{
-          const {password,...rest}=item
-          return rest
-      })
-      
-      const token = jwt.sign(payload[0], process.env.SECRETKEY as string , {expiresIn:'1d'})
-      return res.status(200).json({message:'User has Logged In Successfully', token, Name:user[0].username , Role:user[0].Role})
-   
-  } catch (error) {
-      res.status(500).json(error) 
-  }
-  }
-
-
-  //UPDATE USER
-  export const UpdateUser  = async (req: Request, res: Response) =>{
+export const LoginUser = async (req: Request, res: Response) => {
     try {
-      const userId =uid()
-      const{Name,Email,Password} = req.body
-        
-    //   const user: UserBody= {
-    //     Name,
-    //     Email,
-    //     Password,
-    //     Role,
-    //     CreatedAt : new Date(),
-    //     IsDeleted: 0
-    // }
-  
-      const {error} =UserUpdateHelper.validate(req.body)
-      if(error){
-          return res.status(422).json(error.details[0].message)
-      }
-  
-      const hashedPassword= await bcrypt.hash(Password,10)
-  
-      ///Update user
-      await _db.exec(' sp_UpdateUser', {userId, Name:Name, Email:Email, Password:hashedPassword})
-      return res.status(201).json({message:'User has been updated successfully'})
-  
-  } 
-  catch (error) {
-       res.status(500).json(error) 
-  }
-  }
-  
+        const { email, password } = req.body;
+
+        const user: UserBody[] = await _db.exec("getUserByEmail", { email:email }) as unknown as UserBody[];
+
+        if (!user) {
+            return res.status(400).json({ message: "User  was not found" });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+
+        const hashedPassword = await bcrypt.hash(password, salt);
+
+        const goodPass = await bcrypt.compare(password, user[0].password);
+        if (!goodPass) {
+            return res.status(400).json({ message: "Password is incorrect" });
+        }
+
+        const token = Jwt.sign(
+            { userid: user[0].userid, email: user[0].email, name: user[0].name },
+            process.env.JWT_SECRET as string,
+            {
+                expiresIn: "1d",
+            }
+        );
+        return res.status(200).json({ message: "User Has logged In Successfully", token, user });
+    }
+    catch (err: any) {
+        res.status(500).json({ message: "Srerver Error" });
+    }
+
+}
 
 
-// Login 
-// export async function UserLogin(req:ExtendedRequest,res:Response) {
-//   try {
-//     const { Email, Password } = req.body;
-//     const { error } = UserLogInHelper.validate(req.body);
-//     if (error) {
-//       return res.status(422).json(error.details[0].message);
-//     }
-
-//     const user: User[] = (await _db.exec('sp_GetUserbyEmail', { Email})).recordset;
-//     // console.log(user);
-    
-//     if (user.length===0) {
-//       return res.status(404).json({ error: 'User not found' });
-//     }
-//     console.log(user);
-    
-//     console.log("pass from db",user[0].password);
-//     console.log("pass",Password);
-    
-//     const valid = await bcrypt.compare(Password, user[0].password);
-    
-//     if (!valid) {
-//       return res.status(401).json({ error: 'Invalid email or password' });
-//     }
-
-//     const { password: omitPassword, ...payload } = user[0]; //omit password from payload
-//     const token = jwt.sign(payload, process.env.SECRETKEY as string, { expiresIn: '1d' });
-//     return res.status(200).json({ message: 'User has logged in successfully', token, ...payload });
-
-//   } catch (error) {
-//     console.log ('Error in UserLogin:', error);
-//     res.status(500).json({ error: 'An error occurred while processing your request' });
-//   }
-// }
-  
-//HOMEPAGE
-// export async function Homepage(req:ExtendedRequest,res:Response) {
-//   try {
-//     if(req.info){
-//       console.log(req.info.Name);
-      
-//       return res.status(200).json(`Greetings ${req.info.Name}`)
-//     }  
-//     else {
-//       return res.status(400).json('Request does not contain valid info');
-//     }
-//   } catch (error) {
-//     {
-//       console.error(error);
-//       return res.status(500).json('Internal Server Error');
-//     }
-//   }
-// }
   // GET ALL USERS
-  export const GetAllUsers=async(req:Request,res:Response)=>{
-    try {
-      const users:UserBody[]= await (await  _db.exec('sp_GetAllUsers')).recordset
-      if(!users){
-         return res.status(404).json({error:'No User Has BeenFound'})
-      }
-    
-      return res.status(200).json(users)
-    
-    } catch (error) {
-      return res.status(500).json(error)
-    } 
-    
-  }
-  // GET USER BY ID
-  export const GetUserById=async(req: Request,res:Response)=>{
-    try {
-      const userId = req.params.user_id
-      const user:UserBody= await (await  _db.exec('sp_GetUserbyId', {userId})).recordset[0]
-      if(!user){
-         return res.status(404).json({error:'User Is Not Found'})
-      }
-    
-      return res.status(200).json(user)
-    
-    } catch (error) {
-      return res.status(500).json(error)
-    }
-    
-  }
-// GET USER PROFILE
 
-// export const GetUserProfile=async(req:ExtendedRequest,res:Response)=>{
-//   try {
-//     // const id = req.params.userId
-//     const userId = req.params.user_id as string;
-//     const user:UserBody= await (await  _db.exec('sp_GetUserProfile', {userId })).recordset[0]
-//     if(!user){
-//        return res.status(404).json({error:'No User has been  Found'})
-//     }
-  
-//     return res.status(200).json(user)
-  
-//   } catch (error) {
-//     return res.status(500).json(error)
-//   }
-  
-//   }
-
-//  UPDATE USER PROFILE
-// export async function updateProfile(req:ExtendedRequest,res:Response){
-//   try {
-//   const {display_name,location,about}= req.body
-//   const profile:User[]= await (await _db.exec('sp_GetUserProfile', {user_id:req.params.user_id} )).recordset
-    
-//       if(profile.length){
-//         await _db.exec('sp_update_profile_info', {user_id:req.params.user_id,Display_name:display_name,Location:location,About:about})
-//         return res.status(200).json({message:'User has been updated'})
-//       }
-//     return res.status(404).json({error:'User Is Not Found'}) 
-//   res.json(profile)
+  export const GetAllUsers = async (req: Request, res: Response) => {
+    try {
        
-//     } 
-  
-//   catch (error:any) {
-//      res.status(500).json(error.message)
-//   }
-//   }
+        const users: UserBody[] = await _db.exec("getAllUsers", {}) as unknown as UserBody[];
 
-  // DELETE A USER
-  export const deleteUser=async(req:Request,res:Response)=>{
-    try {
-      const userId = req.params.user_id
-      const user:UserBody= await (await  _db.exec('sp_sp_DeleteUser', {userId})).recordset[0]
-      if(!user){
-         return res.status(404).json({error:'User Is Not Found'})
-      }
-      await _db.exec('sp_DeleteUser', {userId})
-      return res.status(200).json({message:'User deleted successfully'})
-    
-    } catch (error) {
-      return res.status(500).json(error)
+        if (!users) {
+            return res.status(400).json({ message: "No users found" });
+        }
+
+        return res.status(200).json({ message: "All Users Found", users });
     }
-  }
+    catch (err: any) {
+        res.status(500).json({ message: err.message });
+    }
+
+}
+  // GET USER BY ID
+  export const GetUserById = async (req: Request, res: Response) => {
+    try {
+        const { userid } = req.params;
+        const user: UserBody = await _db.exec("getUserById", { userid: userid }) as unknown as UserBody;
+
+        if (!user) {
+            return res.status(400).json({ message: "User was  not found" });
+        }
+
+        return res.status(200).json({ message: "Successfull", user });
+    }
+    catch (err: any) {
+        res.status(500).json({ message: "Error" });
+    }
+
+}
+  // DELETE A USER
+  export const DeleteUser = async (req: Request, res: Response) => {
+
+    try {
+        const { userid } = req.params;
+
+
+        const user: UserBody = await _db.exec("getUserById", { userid: userid }) as unknown as UserBody;
+
+        if (!user) {
+            return res.status(400).json({ message: "User was Not found" });
+        }
+
+        const deleted = await _db.exec("deleteUser", { userid: userid });
+
+        if (deleted) {
+            return res.status(200).json({ message: "User was deleted successfully" });
+        }
+        else {
+            return res.status(500).json({ message: "error" });
+        }
+
+    }
+    catch (err: any) {
+        res.status(500).json({ message: "ERROR" });
+    }
+
+}
+
+//UPDATE USER
+export const UpdateUser = async (req: Request, res: Response) => {
+    try {
+        const { userid } = req.params;
+        
+        const user: UserBody[] = await _db.exec("getUserById", { userid: userid }) as unknown as UserBody[];
+
+        if (!user) {
+            return res.status(400).json({ message: "User  was not found" });
+        }
+        const { name, email, password } = req.body;
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+       
+        
+        const recent = new UserBody(
+            user[0].userid,
+            name,
+            email,
+            hashedPassword,
+            new Date(user[0].created_at).toISOString(),
+            new Date().toISOString(),
+            user[0].is_sent.toString()==='false'?'0':'1',
+            user[0].role.toString()==='false'?'0':'1',
+        );
+
+        // console.log(recent)
+
+
+        const { error } = validateUser(recent);
+        if (error) {
+            return res.status(400).json({ message: error.details[0].message });
+        }
+
+        const userUpdated = await _db.exec("createUser", {userid: recent.userid,name: recent.name,email: recent.email,password: recent.password,role: recent.role,is_deleted: recent.is_deleted,is_sent: recent.is_sent,created_at: recent.created_at,
+           
+        });
+
+
+        if (userUpdated) {
+            return res.status(200).json({ message: "User updated", user: recent});
+        }
+        else {
+            return res.status(500).json({ message: "Internal server error" });
+        }
+
+}
+catch (err: any) {
+    res.status(500).json({ message: "ERROR" });
+}
+}

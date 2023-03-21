@@ -1,0 +1,7 @@
+
+
+CREATE OR ALTER PROCEDURE getAllTags
+AS
+BEGIN
+    SELECT * FROM tags
+END

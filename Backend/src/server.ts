@@ -1,5 +1,4 @@
 import express, { json } from 'express'
-import authrouter from './Router/authRoutes'
 import cors from 'cors'
 import questionrouter from './Router/QuestionRoutes'
 import ansrouter from './Router/AnswerRoutes'
@@ -7,6 +6,7 @@ import QuestionVoteRouter from './Router/QuestionVoteRoutes'
 import AnswerVoteRouter from './Router/AnswerVoteRoutes'
 import TagRouter from './Router/TagRouter'
 import CommentRouter from './Router/ComentsRoutes'
+import userrouter from './Router/UserRoutes'
 
 
 const app = express()
@@ -16,7 +16,7 @@ app.use(cors())
 app.use(json()) //adds a body to the Request
 
 //Register Routes
-app.use('/user', authrouter),
+app.use('/user', userrouter),
 app.use('/question' , questionrouter) ,
 app.use ('/answer' , ansrouter),
 app.use ('/questionvote' , QuestionVoteRouter),

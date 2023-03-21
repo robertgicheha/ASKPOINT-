@@ -1,13 +1,14 @@
 import { Router } from "express";
-import { CreateComment, GetAllComments, UpdateComment, DeleteComment, GetCommentById } from "../Controllers/CommentController";
+import { createComment, GetAllComments, updateComment, DeleteComment, GetCommentsById, } from "../Controllers/CommentController";
 
 const CommentRouter = Router();
 
 
-CommentRouter.post("/create", CreateComment);
-CommentRouter.get("/:id", GetCommentById);
+CommentRouter.post("/create", createComment);
+CommentRouter.get("/:id",  GetCommentsById);
 CommentRouter.get("/getall", GetAllComments);
-CommentRouter.put("/update/:id", UpdateComment);
+// CommentRouter.get("/comment/:id",  GetCommentsByUserId);
+CommentRouter.put("/update/:id", updateComment);
 CommentRouter.delete("/delete/:id", DeleteComment);
 
 

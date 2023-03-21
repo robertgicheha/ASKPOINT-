@@ -1,22 +1,17 @@
-const Joi = require('joi');
+import  CommentBody  from "../Models/comments";
+import Joi from "joi";
+
+const commentStructure = Joi.object({
+    comment: Joi.string().required(),
+    created_at: Joi.string().required(),
+    userid: Joi.string().required(),
+    answerid: Joi.string().required(),
+    commentid: Joi.string().required()
+})
 
 
-// create comment helper
-export const generateComment = Joi.object({
-   
-    userId: Joi.string().required(),
-    Body: Joi.string().required(),
-    answerId: Joi.string().required(),
-    CreatedAt: Joi.date().required()
-   
-  });
+const validateComment = (comment:CommentBody) => {
+    return commentStructure.validate(comment)
+}
 
-// update comment helper
-export const updateComment = Joi.object({
-    userId: Joi.string().required(),
-    Body: Joi.string().required(),
-    answerI: Joi.string().required(),
-    CreatedAt: Joi.date().required(),
-   
-  
-});
+export default validateComment

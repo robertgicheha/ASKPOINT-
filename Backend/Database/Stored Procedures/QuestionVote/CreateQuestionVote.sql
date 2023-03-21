@@ -1,18 +1,20 @@
-USE StackOverflow
-GO
 
-CREATE OR ALTER PROCEDURE sp_CreateQuestionVote
-    @voteId VARCHAR ( 255 ),
-    @Value INT,
-    @CreatedAt DATETIME,
-    @userId VARCHAR ( 255 ),
-    @questionId VARCHAR ( 255 )
+CREATE OR ALTER PROCEDURE createQuestionVote
+    @voteid VARCHAR ( 255 ),
+    @vote INT,
+    @created_at DATETIME,
+    @userid VARCHAR ( 255 ),
+    @questionid VARCHAR ( 255 )
 AS
 BEGIN
-
-        INSERT INTO QuestionVote (vote_id, value, created_at, user_id, questions_id)
-        VALUES (@voteId, @Value, @CreatedAt, @userId, @questionId)
-        
-        SELECT * FROM QuestionVote WHERE vote_id = @voteId   
+    IF EXISTS (SELECT * FROM questionvotes WHERE voteid = @voteid)
+    BEGIN
+        UPDATE questionvotes SET vote = @vote WHERE voteid = @voteid
+        SELECT * FROM questionvotes WHERE voteid = @voteid
     END
-
+    ELSE
+    BEGIN
+        INSERT INTO questionvotes (voteid, vote, created_at,  userid, questionid) VALUES (@voteid, @vote, @created_at, @userid, @questionid)
+        SELECT * FROM questionvotes WHERE voteid = @voteid
+    END
+END

@@ -1,6 +1,7 @@
 import nodemailer from 'nodemailer'
 import dotenv from 'dotenv'
 import path from 'path'
+
 dotenv.config({ path: path.resolve(__dirname, '../../.env') })
 
 // Creating a transport and configurations
@@ -20,6 +21,7 @@ let config ={
 }
 
 const sendMail = async(messageOptions:any)=>{
+
     let transporter =createTransporter(config)
     await transporter.verify()
     await transporter.sendMail(messageOptions, (err, info)=>{

@@ -1,13 +1,8 @@
-USE StackOverflow
-GO
-CREATE OR ALTER PROCEDURE sp_DeleteUser(@userId VARCHAR(255))
+
+CREATE OR ALTER PROCEDURE deleteUser
+@userid VARCHAR ( 255 )
 AS
-
 BEGIN
-
-UPDATE users SET isDeleted='1' WHERE user_id=@userId
-
-SELECT * FROM users WHERE user_id=@userId
+    UPDATE users SET is_deleted = 1 WHERE userid = @userid
+    SELECT * FROM users WHERE userid = @userid
 END
-GO
-

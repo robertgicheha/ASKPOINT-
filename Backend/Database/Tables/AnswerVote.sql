@@ -1,15 +1,14 @@
-USE StackOverflow
-GO
 
-CREATE TABLE AnswerVote
+
+CREATE TABLE answervotes
 (
-    vote_id VARCHAR(255) PRIMARY KEY ,
-    user_id VARCHAR(255) NOT NULL,
-    answer_id VARCHAR(255) NOT NULL,
-    value INT NOT NULL,
-     created_at DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(user_id ) ON DELETE CASCADE,
-    FOREIGN KEY ( answer_id) REFERENCES answers( answer_id),
+    voteid VARCHAR ( 255 ) PRIMARY KEY ,
+    vote INT NOT NULL ,
+    created_at DATETIME NOT NULL DEFAULT GETDATE(),
+    userid VARCHAR ( 255 ) NOT NULL ,
+    answerid VARCHAR ( 255 ) NOT NULL ,
+    FOREIGN KEY (userid) REFERENCES users(userid),
+    FOREIGN KEY (answerid) REFERENCES answers(answerid) ON DELETE CASCADE,
+   
 );
 
-DROP TABLE AnswerVote

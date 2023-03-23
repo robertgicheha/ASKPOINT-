@@ -7,11 +7,13 @@ CREATE OR ALTER PROCEDURE createQuestion
     @userid VARCHAR ( 255 ),
     @views INT
 AS
--- 
     BEGIN
         INSERT INTO questions (questionid, question, body,  created_at,  userid, views) VALUES (@questionid, @question, @body,  @created_at, @userid, @views)
         
         SELECT * FROM questions
+
+        SELECT * FROM users
+
 END
 
 

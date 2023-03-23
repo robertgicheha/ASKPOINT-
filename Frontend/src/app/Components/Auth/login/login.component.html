@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="login-page">
-  <form [formGroup]="loginform" (ngSubmit)="send()">
+  <form [formGroup]="loginform" (ngSubmit)="SubmitData()">
     <div class="login-container">
       <div class="login-form">
         <div class="top">
@@ -47,14 +47,11 @@
             </div>
           </div>
         </div>
-        <button
-          class="form-btn"
+        <button type="submit" class="form-btn"
           [disabled]="!loginform.valid"
           [ngClass]="{ invalid: !loginform.valid, valid: loginform.valid }"
-          routerLink="/questions"
-        >
-          Login
-        </button>
+          > Login </button>
+      
         <div class="login-text">
           Do not have an account yet...<span routerLink="/register"
             >SignUp</span

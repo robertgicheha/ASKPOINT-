@@ -12,11 +12,11 @@
         <div class="sign-in">
           <div class="form-group">
             <label>Username</label>
-            <input type="text" name="username" formControlName="username" />
+            <input type="text" name="name" formControlName="name" />
             <span
               class="error"
               *ngIf="
-                !form.get('username')?.valid && form.get('username')?.touched
+                !form.get('name')?.valid && form.get('name')?.touched
               "
               >Please enter a valid username</span
             >
@@ -54,9 +54,10 @@
           <div class="form-group">
             <button
               type="submit"
-              class="register" routerLink="/login" [disabled]="!form.valid"
+              class="register"  [disabled]="!form.valid"
           [ngClass]="{ invalid: !form.valid, valid: form.valid }"
             >
+            <!-- <button type="button" (click)="submitForm()"> -->
               REGISTER
             </button>
           </div>

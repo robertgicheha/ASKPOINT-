@@ -10,6 +10,6 @@ import { FooterComponent } from "../../footer/footer.component";
     styleUrls: ['./single-question.component.css'],
     imports: [CommonModule, HeaderComponent, FooterComponent]
 })
-export class SingleQuestionComponent {
+export class SingleQuestionComponent  {
 
 }

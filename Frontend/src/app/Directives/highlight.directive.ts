@@ -1,16 +1,13 @@
-// import { Directive } from '@angular/core';
-// import { CommonModule } from '@angular/common';
+import { Directive, OnInit,ElementRef } from '@angular/core';
 
-// @Directive({
-//   selector: '[appHighlight]',
-//   standalone: true
-//   imports: [CommonModule],
-  
-// })
-// export class HighlightDirective implements OnInit {
+@Directive({
+  selector: '[appHighlight]',
+  standalone: true
+})
+export class HighlightDirective {
 
-//   constructor() { }
-// ngOninit()
-
-
-// }
+  constructor(private elementRef:ElementRef) { }
+  ngOnInit(): void {
+    this.elementRef.nativeElement.style.color='green'
+  }
+}

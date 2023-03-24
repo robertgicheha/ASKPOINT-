@@ -1,7 +1,7 @@
 
 CREATE OR ALTER PROCEDURE getCommentById
-    @commentid VARCHAR ( 255 )
+    @id VARCHAR ( 255 )
 AS
 BEGIN
-    SELECT * FROM comments WHERE commentid = @commentid
+    SELECT * FROM comments WHERE commentid = @id
 END

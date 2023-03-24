@@ -21,7 +21,7 @@ import { AuthGuardService } from '../../../Services/auth-guard.service';
 })
 export class AskQuestionComponent implements OnInit  {
   askForm!: FormGroup;
-  
+ 
   constructor(private router: Router, private questionService: QuestionService) {
    
   }
@@ -29,7 +29,7 @@ export class AskQuestionComponent implements OnInit  {
 
     this.askForm = new FormGroup({
       question: new FormControl(null, [Validators.required]),
-      body: new FormControl(null, [Validators.required]),
+      body: new FormControl(null, [Validators.required])
 
 
     });
@@ -42,7 +42,7 @@ export class AskQuestionComponent implements OnInit  {
     console.log(response);
     
       localStorage.setItem('token', response.token);
-      this.router.navigate(['/questions']);
+      this.router.navigate(['questions']);
     });
   }
   

@@ -5,9 +5,15 @@ import { catchError, map, mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { QuestionService } from '../../Services/Question/question.service';
 import * as QuestionActions from '../Actions/question.action';
+import { Question } from 'src/app/Interfaces';
 
 @Injectable()
 export class QuestionEffects {
+
+   constructor(
+    private actions$: Actions,
+    private questionService: QuestionService
+  ) { }
   showQuestions$ = createEffect(() =>
     this.actions$.pipe(
       ofType(QuestionActions.showQuestions),
@@ -24,24 +30,21 @@ export class QuestionEffects {
     )
   );
 
-  addQuestion$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(QuestionActions.addQuestion),
-      mergeMap(({ question }) =>
-        this.questionService.addQuestion(question).pipe(
-          map((addedQuestion) =>
-            QuestionActions.addQuestionSuccessful({ question: addedQuestion })
-          ),
-          catchError((error) =>
-            of(QuestionActions.addQuestionFailed({ error: error.message }))
-          )
-        )
-      )
-    )
-  );
+  // addQuestion$ = createEffect(() =>
+  //   this.actions$.pipe(
+  //     ofType(QuestionActions.addquestion),
+  //     mergeMap(({ question }) =>
+  //       this.questionService.addQuestion(question).pipe(
+  //         map((addedQuestion) =>
+  //           QuestionActions.addQuestionSuccessful({addedQuestion: })
+  //         ),
+  //         catchError((error) =>
+  //           of(QuestionActions.addQuestionFailed({ error: error.message }))
+  //         )
+  //       )
+  //     )
+  //   )
+  // );
 
-  constructor(
-    private actions$: Actions,
-    private questionService: QuestionService
-  ) { }
+ 
 }

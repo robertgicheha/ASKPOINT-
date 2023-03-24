@@ -1,8 +1,8 @@
 
 CREATE OR ALTER PROCEDURE getQuestionById
-    @questionid VARCHAR ( 255 )
+    @id VARCHAR ( 255 )
 AS
 BEGIN
-    SELECT * FROM questions WHERE questionid = @questionid
+    SELECT * FROM questions WHERE questionid = @id
 END
 

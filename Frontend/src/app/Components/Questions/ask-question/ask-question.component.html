@@ -7,7 +7,7 @@
       <form>
         <div>
           <label for="question">Question</label><br>
-          <input type="text"  id="question" name="question"f ormControlName="question">
+          <input type="text"  id="question" name="question"formControlName="question">
           <!-- <p *ngIf="askForm.get('question')!.touched">question is required</p> -->
           <p *ngIf="askForm.get('question')!.touched && askForm.get('question')!.invalid">Please enter question</p>
         </div>
@@ -25,7 +25,7 @@
         <br>
         <br>
         <div class="bottom-butttons">
-          <input type="submit" value="Ask question" [disabled]="!askForm.valid">
+          <input type="submit" value="Ask question" >
           <br>
         </div>
     

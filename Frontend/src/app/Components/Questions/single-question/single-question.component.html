@@ -1,5 +1,5 @@
 <app-header></app-header>
-<div class="question">
+<div class="question" *ngFor="let question of question">
   <div class="info">
     <div class="upvote">
       <img class="upvote-icon" src="../../../../assets/icons/up.png">
@@ -8,7 +8,7 @@
   </div>
    </div>
    <div class="data">
-    <h2><a a routerLink="/question" href="#"></a></h2>
+    <h2><a a routerLink="/question" href="#">>{{question.question}}</a></h2>
     <p></p>
      <div class="meta">
     <span></span>
@@ -53,7 +53,7 @@
             <p></p>
            </div>
           
-       
+<!--        
         </div>
         <div class="question">
           <div class="info">
@@ -65,7 +65,7 @@
            </div>
            <div class="data">
             <p></p>
-           </div>
+           </div> -->
           
        
         </div>

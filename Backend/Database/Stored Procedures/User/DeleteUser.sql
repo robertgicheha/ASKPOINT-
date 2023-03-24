@@ -1,8 +1,8 @@
 
 CREATE OR ALTER PROCEDURE deleteUser
-@userid VARCHAR ( 255 )
+@id VARCHAR ( 255 )
 AS
 BEGIN
-    UPDATE users SET is_deleted = 1 WHERE userid = @userid
-    SELECT * FROM users WHERE userid = @userid
+    UPDATE users SET is_deleted = 1 WHERE userid = @id
+    SELECT * FROM users WHERE userid = @id
 END

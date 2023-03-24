@@ -9,21 +9,12 @@ import QuestionVoteBody from "../Models/questionvote";
 
 
 
-// interface ExtendedRequest extends Request {
-//   body: {voteid: string;
-//     vote: number;
-//     created_at: string;
-//     userid: string;
-//     questionid: string;
-//  };
-// //   params: { voteId: string };
-// }
 
 const _db = new DatabaseHelper();
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
-//CREATE AN QUESTION VOTE
+// CREATE AN QUESTION VOTE
 export const createQuestionVote: RequestHandler = async (req: Request, res: Response) => {
   try {
  
@@ -62,7 +53,7 @@ export const createQuestionVote: RequestHandler = async (req: Request, res: Resp
 
 }
 
-//GET ALL QUESTION VOTES
+// GET ALL QUESTION VOTES
 export const GetAllQuestionVotes: RequestHandler = async (req: Request, res: Response) => {
   try {
      
@@ -76,7 +67,7 @@ export const GetAllQuestionVotes: RequestHandler = async (req: Request, res: Res
   }
 }
 
-//GET QUESTION VOTE BY ID
+// GET QUESTION VOTE BY ID
 export const GetQuestionVoteById: RequestHandler = async (req: Request, res: Response) => {
   try {
       const voteid = req.params.id
@@ -95,7 +86,7 @@ export const GetQuestionVoteById: RequestHandler = async (req: Request, res: Res
   }
 }
 
-//UPDATE QUESTION VOTE
+// UPDATE QUESTION VOTE
 export const updateQuestionVote: RequestHandler = async (req: Request, res: Response) => {
   try {
       const questionVote:QuestionVoteBody[] = await _db.exec("getQuestionVoteById", { voteid: req.params.voteid }) as unknown as QuestionVoteBody[];

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,11 +14,13 @@ import {HttpClientModule} from "@angular/common/http"
 import { AdminComponent } from './Components/Admin/admin/admin.component';
 import { AdminQuestionsComponent } from './Components/Admin/admin-questions/admin-questions.component';
 import { AdminUsersComponent } from './Components/Admin/admin-users/admin-users.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+// import { ShortQuestionPipe } from './short-question.pipe';
 
 
 @NgModule({
     declarations: [
-        AppComponent,
+        AppComponent
         
     ],
     providers: [],
@@ -38,7 +40,9 @@ import { AdminUsersComponent } from './Components/Admin/admin-users/admin-users.
         HttpClientModule,
         AdminComponent,
         AdminQuestionsComponent,
-        AdminUsersComponent
+        AdminUsersComponent,
+        // ShortQuestionPipe,
+        StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() })
     ]
 })
 export class AppModule { }

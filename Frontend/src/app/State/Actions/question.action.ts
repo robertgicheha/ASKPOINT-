@@ -13,7 +13,7 @@ export const showQuestionsFailed = createAction(
   props<{ error: string }>()
 );
 
-export const addQuestion = createAction(
+export const addquestion = createAction(
   '[Question] Add Question',
   props<{ question: Question }>()
 );

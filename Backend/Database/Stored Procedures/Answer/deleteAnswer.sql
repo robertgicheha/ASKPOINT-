@@ -1,9 +1,9 @@
 
 CREATE OR ALTER PROCEDURE deleteAnswer
-    @answerid VARCHAR ( 255 )
+    @id VARCHAR ( 255 )
 AS
 BEGIN
-    DELETE answers  WHERE answerid = @answerid
+    DELETE answers  WHERE answerid = @id
 
     SELECT * FROM answers 
 END

@@ -7,10 +7,10 @@ import DatabaseHelper  from '../DatabaseHelpers/index';
 import  AnswerVoteBody from '../Models/answervote'
 import validateAnswerVote from '../Helpers/AnswerVoteHelper'
 
-
 const _db = new DatabaseHelper();
 
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
+
 
 //CREATE AN QUESTION VOTE
 export const createAnswerVote: RequestHandler = async (req: Request, res: Response) => {

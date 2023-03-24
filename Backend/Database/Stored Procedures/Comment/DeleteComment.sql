@@ -4,5 +4,5 @@ CREATE OR ALTER PROCEDURE deleteComment
 AS
 BEGIN
     DELETE comments   WHERE commentid = @commentid
-    SELECT * FROM comments WHERE commentid = @commentid
+    -- SELECT * FROM comments WHERE commentid = @commentid
 END

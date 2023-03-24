@@ -1,7 +1,7 @@
 
 CREATE OR ALTER PROCEDURE getUserById
-@userid VARCHAR ( 255 )
+@id VARCHAR ( 255 )
 AS
 BEGIN
-SELECT * FROM users WHERE userid = @userid
+SELECT * FROM users WHERE userid = @id
 END

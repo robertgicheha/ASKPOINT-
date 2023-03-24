@@ -6,8 +6,8 @@ POST  http://localhost:4000/user/register
 Content-Type: application/json
 
 {
-    "name":"aliyah",
-    "email":"aliyah@gmail.com",
+    "name":"Jill",
+    "email":"jill@gmail.com",
     "password":"kevin123"
 
 }
@@ -20,12 +20,12 @@ Content-Type: application/json
 
 {
    
-   "email":"aliyah@gmail.com",
+   "email":"jill@gmail.com",
     "password":"kevin123"
 }
 
 ### UPDATE USER
-PUT http://localhost:4000/users/update/445c7f1f-da37-44da-bdd9-6fb975e90f041
+PUT http://localhost:4000/users/update/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiI0ODY1ZTY2Ny05ODRjLTRiYzgtYWI5Yi0wNTI0MmExMWNiN2MiLCJuYW1lIjoia2lsbCIsImVtYWlsIjoia2lsbEBnbWFpbC5jb20iLCJjcmVhdGVkX2F0IjoiMjAyMy0wMy0yNFQwMDowMDowMC4wMDBaIiwiaXNfc2VudCI6ZmFsc2UsInJvbGUiOmZhbHNlLCJpc19kZWxldGVkIjpmYWxzZSwiaWF0IjoxNjc5NjI3Njc5LCJleHAiOjE2Nzk3MTQwNzl9.r8A-_aByxQyq98ZO4x72cuICMFsCRfzuLwnvcn-fSbY
 Content-Type: application/json
 
 {
@@ -35,12 +35,12 @@ Content-Type: application/json
 
 //GET USER BY ID
 ###
-GET http://localhost:4000/user/39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b
+GET http://localhost:4000/user/98922034-54b1-4b16-a919-65e89e48a97f
 
 
 ### DELETE USER
 
-PATCH  http://localhost:4000/user/delete/39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b
+DELETE   http://localhost:4000/user/delete/39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b
  
 
 ### GET ALL USERS
@@ -55,10 +55,9 @@ POST http://localhost:4000/question/create
 Content-Type: application/json
 
 {
-  "question": "BREAD AND MANDAZI?",
-  "body": "Which needs the other",
-  "userid":"39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b",
-  "views": 0
+  "question": "PEP VS TENHAG",
+  "description": "Which needs the other"
+  
 
 }
 

@@ -30,7 +30,7 @@ export const questionReducer = createReducer(
     isLoading: false,
     error
   })),
-  on(QuestionActions.addQuestion, (state) => ({
+  on(QuestionActions.addquestion, (state) => ({
     ...state,
     isLoading: true
   })),

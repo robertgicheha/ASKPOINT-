@@ -20,6 +20,10 @@ export const sqlConfig = {
     trustServerCertificate: true // change to true for local dev / self-signed certs
   }
 }
+
+
+
+export default sqlConfig
 console.log('Running');
 
 const checkConnection =async () => {

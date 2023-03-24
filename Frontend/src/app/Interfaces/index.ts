@@ -12,6 +12,7 @@ export interface Message{
   name:string;
   token:string
   message:string;
+  role:string;
 }
 export interface token{
   token:string;
@@ -36,9 +37,6 @@ export interface Question {
   questionid: string;
   question: string;
   body: string;
-  created_at: string;
-  userid: string;
-  views: number;
 }
 
 export interface QuestionSuccess{

@@ -1,8 +1,8 @@
 
-CREATE OR ALTER PROCEDURE getAllQuestions
+CREATE OR ALTER PROCEDURE sp_getAllQuestions
 AS
 BEGIN
     SELECT * FROM questions
 
-    SELECT * from questions
+
 END

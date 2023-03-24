@@ -2,9 +2,9 @@ import path from 'path'
 import dotenv from 'dotenv'
 import {v4 as uid} from 'uuid'
 import { Request,RequestHandler,Response } from 'express'
-import DatabaseHelper  from './Backend/src/DatabaseHelpers/index';
-import  AnswerBody from './Backend/src/Models/answer';
-import validateAnswer from './Backend/src/Helpers/AnswerHelper'
+import DatabaseHelper  from '../DatabaseHelpers/index';
+import  AnswerBody from '../Models/answer'
+import validateAnswer from '../Helpers/AnswerHelper'
 
 const  _db = new DatabaseHelper()
 
@@ -83,7 +83,7 @@ export const GetAllAnswers: RequestHandler = async (req: Request, res: Response)
             return res.status(500).json({ message: "Answers not found" });
         }
         else {
-            return res.status(200).json(answers);
+            return res.status(200).json({ message: "Answers successfully found" , answers});
         }
     }
     catch (err) {

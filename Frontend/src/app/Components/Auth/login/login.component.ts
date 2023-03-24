@@ -8,10 +8,11 @@ import {
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HeaderComponent } from '../../header/header.component';
-import { UserLogin } from 'src/app/Interfaces';
+import { LoginUser, User } from 'src/app/Interfaces';
 import { AuthService } from '../../../Services/auth.service';
 import { UserService } from '../../../Services/user.service';
 import { FooterComponent } from '../../footer/footer.component';
+import { Observable}  from 'rxjs'
 
 @Component({
   selector: 'app-login',
@@ -27,33 +28,46 @@ import { FooterComponent } from '../../footer/footer.component';
   ],
 })
 export class LoginComponent implements OnInit {
-  user: UserLogin = { email: '', password: '' };
-  error = '';
+  // user: LoginUser= { email: '' , password: '' };
+  // error = '';
   constructor(
     private router: Router,
     private userService: UserService,
     private auth: AuthService
-  ) {}
+  ) {  this.loginform = new FormGroup({
+    email: new FormControl(null, [Validators.required, Validators.email]),
+    password: new FormControl(null, [Validators.required]),
+  });}
 
   loginform!: FormGroup;
 
   ngOnInit(): void {
-    this.loginform = new FormGroup({
-      email: new FormControl(null, [Validators.required, Validators.email]),
-      password: new FormControl(null, [Validators.required]),
-    });
+    // this.loginform = new FormGroup({
+    //   email: new FormControl(null, [Validators.required, Validators.email]),
+    //   password: new FormControl(null, [Validators.required]),
+    // });
   }
 
-  send() {
+  SubmitData() {
     console.log(this.loginform);
-    this.userService.login(this.loginform.value).subscribe(
-      (user) => {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        this.router.navigate(['']);
-      },
-      (error) => {
-        this.error = error;
+    this.userService.loginUser(this.loginform.value).subscribe((response) => {
+      console.log(response);
+      this.auth.setRole(response.role)
+      this.auth.setName(response.name)
+      this.auth.login();
+      localStorage.setItem('token', response.token);
+      // if(response.token){
+      //   this.router.navigate(['questions'])
+      // }
+      if (response.role == 'user' && response.token) {
+        this.router.navigate(['questions'])  
+      } else if(response.role == 'admin' && response.token){
+        this.router.navigate(['admin'])  
       }
-    );
+    });
+    // (error)=>{
+    //   this.error=error.error
+    //   });
   }
 }
+

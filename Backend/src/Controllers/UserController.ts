@@ -7,6 +7,7 @@ import { RequestHandler,Request,Response } from 'express'
 import  validateUser from '../Helpers/UserHelper'
 import DatabaseHelper from "../DatabaseHelpers/index";
 import UserBody from '../Models/user'
+import user from '../Models/user'
 
 const  _db = new DatabaseHelper()
 
@@ -15,8 +16,8 @@ dotenv.config({ path:path.resolve(__dirname, '../.env')})
 //REGISTER A USER
 export const UserRegister = async (req: Request, res: Response) => {
     try {
-        const userid = uid()
-        const { name, email, password, } = req.body;
+    
+        const { name, email, password} = req.body;
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
        
@@ -28,7 +29,7 @@ export const UserRegister = async (req: Request, res: Response) => {
             new Date().toISOString(),
             "0",
             "0",
-            "0",
+            "0"
 
         );
         console.log(user);
@@ -36,7 +37,7 @@ export const UserRegister = async (req: Request, res: Response) => {
         const { error } = validateUser(user);
 
         if (error) {
-            return res.status(400).json({ message: "Error in user body" });
+            return res.status(401).json({ message: error.details[0].message });
         }
 
         const Registered = await _db.exec("insertUser", {
@@ -48,50 +49,27 @@ export const UserRegister = async (req: Request, res: Response) => {
             is_sent: user.is_sent,
             role: user.role,
             is_deleted: user.is_deleted,
-           
-           
         });
-
-
-        // if(Registered){
-        //     res.status(200).json({message:"User registered successfully"})
-        // }
-        // else{
-        //     res.status(200).json({message:"Registration Failed"})
-        // }
-        // }
-        //    if(Registered){
-        //     const token = Jwt.sign(user, process.env.SECRETKEY as string, {expiresIn: '1d'});
-        //     res.status(200).json({status:"User registered successfully",
-        //     data:{
-        //         token,
-        //         user
-        //     }
-        // });
-        // }else{
-        //     res.status(500).json({message:"There was an error creating user"})
-        // }
+      
+        
         if (Registered) {
-            const token = Jwt.sign(
-                { userid:user.userid, email: user.email, name: user.name },
-                process.env.JWT_SECRET as string,
-                {
-                    expiresIn: "1d",
-                }
-            );
-            return res.status(201).json({ message: "User registered successfully", token, user });
-        }
-        else {
-            return res.status(500).json({ message: "Error is registration" });
-        }
-
-
+           const token = Jwt.sign(
+            { userid:user.userid, email: user.email, name: user.name },
+            process.env.JWT_SECRET as string,
+            {
+                expiresIn: "1d",
+            }
+        );
+        return res.status(201).json({ message: "User registered successfully", token, user });
+    
+        }else
+        return res.status(500).json({ message: "Error in registration" });
     }
+        
+    
     catch (err: any) {
         res.status(500).json(err);
     }
-
-
 }
 
 // USER LOGIN
@@ -129,51 +107,57 @@ export const LoginUser = async (req: Request, res: Response) => {
 
 }
 
-
-  // GET ALL USERS
-
-  export const GetAllUsers  = async (req: Request, res: Response) => {
-    try {
-       
-        const users: UserBody[] = await _db.exec(" getAllUsers", {}) as unknown as UserBody[]
-
-        if (!users) {
-            return res.status(400).json({ message: "No users found" });
-        }
-
-        return res.status(200).json({ message: "All Users Found", users });
-    }
-    catch (err: any) {
-        res.status(500).json({ message: err });
-    }
-
-}
   // GET USER BY ID
   export const GetUserById = async (req: Request, res: Response) => {
     try {
         const userid = uid()
-        const user: UserBody[] = await _db.exec("getUserById", { userid }) as unknown as UserBody[];
+        const oneuser: UserBody[] = await _db.exec("getUserById", { userid }) as unknown as UserBody[];
 
-        if (!user) {
+        if (!oneuser) {
             return res.status(400).json({ message: "User was  not found" });
+        }else{
+            return res.status(200).json( oneuser );
         }
 
-        return res.status(200).json({ message: "User Was Found", user });
+        
     }
     catch (err: any) {
         res.status(500).json({ message: "Error" });
     }
 
 }
+
+
+  // GET ALL USERS
+
+ export const GetAllUsers = async (req: Request, res: Response) => {
+    try {
+
+        const users = await _db.exec('sp_getAllUsers',{
+        }) as unknown as UserBody[];
+
+        if (!users) {
+            return res.status(400).json({ message: "No users found" });
+        }
+
+        return res.status(200).json(users)
+    }
+    catch (err: any) {
+        res.status(500).json({ message: err.message });
+    }
+
+}
+
+
   // DELETE A USER
   export const DeleteUser = async (req: Request, res: Response) => {
 
     try {
         const userid = uid()
 
-        const user:UserBody[] = await _db.exec("getUserById", { userid }) as unknown as UserBody[];
+        const oneuser:UserBody[] = await _db.exec("getUserById", { userid }) as unknown as UserBody[];
 
-        if (!user) {
+        if (!oneuser) {
             return res.status(400).json({ message: "User was Not found" });
         }
 

@@ -19,7 +19,7 @@
               <li><a href="#">Unanswered</a></li>
             </ul>
           </nav>
-          <div class="all-questions">
+          <!-- <div class="all-questions">
           <div class="question">
             <div class="info">
               <p>votes</p>
@@ -30,19 +30,19 @@
               <p>0</p>
              </div>
              <div class="data">
-              <h2><a a routerLink="/question" href="#">How do I center an element vertically in CSS?</a></h2>
+              <h2><a a routerLink="/question" href="#"></a></h2>
               <p>By default, CSS positions elements relative to their parent container based on the top-left corner of the element. This means that...</p>
                <div class="meta">
               <span>asked 3 minutes ago</span>
               <span>by John Smith</span>
             </div>
-             </div>
+             </div> -->
             
-       <button type="ongeza" id="ask" routerLink="/answer">ANSWER QUESTION</button>
+       <!-- <button type="ongeza" id="ask" routerLink="/answer">ANSWER QUESTION</button> -->
           </div>
         </div>
         <div class="all-questions">
-          <div class="question">
+          <div class="question" *ngFor="let question of question">
             <div class="info">
               <p>votes</p>
               <p>0</p>
@@ -52,17 +52,17 @@
               <p>0</p>
              </div>
              <div class="data">
-              <h2><a a routerLink="/question" href="#">How do I center an element vertically in CSS?</a></h2>
-              <p>By default, CSS positions elements relative to their parent container based on the top-left corner of the element. This means that...</p>
+              <h2><a a routerLink="/question" href="#">{{question.question}}</a></h2>
+              <p>{{question.body}}</p>
                <div class="meta">
               <span>asked 3 minutes ago</span>
               <span>by John Smith</span>
             </div>
              </div>
             
- <button type="ongeza" id="ask" routerLink="/answer">ANSWER QUESTION</button>
+ <!-- <button type="ongeza" id="ask" routerLink="/answer">ANSWER QUESTION</button> -->
           </div>
-        </div>
+        <!-- </div>
         <div class="all-questions">
           <div class="question">
             <div class="info">
@@ -129,7 +129,7 @@
  <button type="ongeza" id="ask" routerLink="/answer">ANSWER QUESTION</button>
           </div>
         </div>
-    </div>
+    </div> -->
   
     <br>
     <div class="footer">

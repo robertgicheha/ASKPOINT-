@@ -6,9 +6,9 @@ POST  http://localhost:4000/user/register
 Content-Type: application/json
 
 {
-    "name":"wamutitu",
-    "email":"shmalologicheha@gmail.com",
-    "password":"shmalolo123"
+    "name":"aliyah",
+    "email":"aliyah@gmail.com",
+    "password":"kevin123"
 
 }
 
@@ -20,8 +20,8 @@ Content-Type: application/json
 
 {
    
-   "email":"shmalologicheha@gmail.com",
-    "password":"shmalolo123" 
+   "email":"aliyah@gmail.com",
+    "password":"kevin123"
 }
 
 ### UPDATE USER
@@ -43,9 +43,8 @@ GET http://localhost:4000/user/39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b
 PATCH  http://localhost:4000/user/delete/39e6d17f-78a9-46d7-9ff7-7fc468ee6c2b
  
 
- //GET ALL USERS
-###
-GET http://localhost:4000/user/allusers
+### GET ALL USERS
+GET http://localhost:4000/user/all/ll
 
 
 

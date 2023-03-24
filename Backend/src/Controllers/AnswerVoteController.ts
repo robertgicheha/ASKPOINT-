@@ -17,9 +17,9 @@ export const createAnswerVote: RequestHandler = async (req: Request, res: Respon
   try {
  
       const voteId = req.params;
-      const {voteid, answerid, userid, vote } = req.body;
+      const {answerid, userid, vote } = req.body;
 
-      const newquestionVote = new AnswerVoteBody(
+      const newanswerVote = new AnswerVoteBody(
           uid(),
           vote,
           new Date().toISOString(),
@@ -28,16 +28,18 @@ export const createAnswerVote: RequestHandler = async (req: Request, res: Respon
          
       );
 
-      const { error } = validateAnswerVote(newquestionVote);
+      const { error } = validateAnswerVote(newanswerVote);
+      console.log(newanswerVote);
+      
       if (error) {
           return res.status(400).json({ message: error.details[0].message });
       }
 
-      const questionVoteCreated = _db.exec("createAnswerVote", {voteid: newquestionVote.voteid,vote: newquestionVote.vote.toString(),created_at:newquestionVote.created_at,userid: newquestionVote.userid,answerid: newquestionVote.answerid})
-      if (!questionVoteCreated) {
+      const answerVoteCreated = await  _db.exec("createAnswerVote", {voteid: newanswerVote.voteid,vote: newanswerVote.vote.toString(),created_at:newanswerVote.created_at,userid: newanswerVote.userid,answerid: newanswerVote.answerid})
+      if (!answerVoteCreated) {
         return res.status(400).json({ message: "AnswerVote not created" });
       }else{
-        return res.status(201).json(newquestionVote);
+        return res.status(201).json(newanswerVote);
       }
 
   }

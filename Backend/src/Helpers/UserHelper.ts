@@ -6,10 +6,10 @@ const userStructure = Joi.object({
     name: Joi.string().required(),
     email: Joi.string().email().required(),
     password: Joi.string().required(),
-    role: Joi.string().required(),
-    is_deleted: Joi.string().required(),
-    is_sent: Joi.string().required(),
-    created_at: Joi.string().required(),
+    role: Joi.string(),
+    is_deleted: Joi.string(),
+    is_sent: Joi.string(),
+    created_at: Joi.string(),
     userid: Joi.string().required()
 })
 
@@ -18,7 +18,5 @@ const validateUser = (user:UserBody) => {
 }
 
 export default validateUser
-
-
 
 

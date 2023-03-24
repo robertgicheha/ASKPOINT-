@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { UserRegister , LoginUser,GetAllUsers,DeleteUser,GetUserById, UpdateUser} from "../Controllers/UserController";
+import { UserRegister , LoginUser,DeleteUser,GetUserById, UpdateUser, GetAllUsers} from "../Controllers/UserController";
 
 
 const userrouter = Router();
@@ -8,7 +8,7 @@ const userrouter = Router();
 userrouter.route("/register").post(UserRegister);
 userrouter.route("/login").post(LoginUser);
 userrouter.route("/:id").get(GetUserById);
-userrouter.route("/allusers").get(GetAllUsers);
+userrouter.route("/all/all").get(GetAllUsers);
 userrouter.route("/update/:id").put(UpdateUser);
 // authrouter.route("/profile/:user_id").get(GetUserProfile);
 userrouter.route("/delete/:id").patch(DeleteUser);

@@ -1,6 +1,11 @@
+USE ANSWERPOINT
+GO
 
-CREATE OR ALTER PROCEDURE getAllUsers
+CREATE  OR ALTER PROCEDURE sp_getAllUsers
 AS
 BEGIN
-    SELECT * FROM users where is_deleted =0;
+    SELECT * FROM users;
 END
+    
+
+-- EXEC sp_getAllUsers

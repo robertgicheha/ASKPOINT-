@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createQuestion, deleteQuestion, GetAllQuestions,  GetQuestionById,  increaseQuestionViews, updateQuestion } from "../Controllers/QuestionsController";
-
+import { verifyToken } from "../Middlewares/VerifyToken";
 
 const questionrouter = Router();
 
@@ -8,9 +8,9 @@ const questionrouter = Router();
 questionrouter.route("/create").post(createQuestion);
 questionrouter.route("/update/:id").post(updateQuestion);
 questionrouter.route("/delete/:id").patch(deleteQuestion);
-questionrouter.route("/:id").get( GetQuestionById);
-questionrouter.route("/views").post( increaseQuestionViews);
-questionrouter.route("/all").get(GetAllQuestions);
+questionrouter.route("/:id").get(GetQuestionById);
+questionrouter.route("/views").post(increaseQuestionViews);
+questionrouter.route('/all/all').get(GetAllQuestions);
 
 // questionrouter.get('/home',VerifyToken, Homepage)//protected Route
 

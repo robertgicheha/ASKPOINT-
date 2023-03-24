@@ -20,7 +20,7 @@ dotenv.config({ path: path.resolve(__dirname, '../.env') })
 export const createQuestion: RequestHandler = async (req: Request, res: Response) => {
 
     try {
-    const questionid=uid()
+        const {questionid} = req.params
       const { question, body, userid,views } = req.body;
       
       const questionone = new QuestionBody(
@@ -96,15 +96,15 @@ export const deleteQuestion : RequestHandler = async (req: Request, res: Respons
 
 // GET ALL OF THE QUESTIONS QUESTIONS
 
-export const GetAllQuestions  = async (req: Request, res: Response) => {
+export const GetAllQuestions: RequestHandler = async (req: Request, res: Response) => {
     try {
-    const questionid = req.params.id
-     const all =   _db.exec('getAllQuestions' , )
+     
+     const all =  await _db.exec( 'sp_getAllQuestions' ,{})
      console.log(all)
      if (!all) {
-        return res.status(404).json({ message: "Questions were not found" })
+        return res.status(404).json({ message: "Questions were not found"})
      }else{
-        return res.status(200).json({message:"Questions Found"})
+        return res.status(200).json(all)
      }
      
     }
@@ -119,7 +119,7 @@ export const GetQuestionById : RequestHandler = async (req: Request, res: Respon
 
     try {
         const questionid = req.params.id
-        const onequestion = await _db.exec("getQuestionById", { questionid})
+        const onequestion = await _db.exec("sp_getQuestionById", { questionid})
 
         if (!onequestion){
             return res.status(404).json({ message: "Question was  not found" });

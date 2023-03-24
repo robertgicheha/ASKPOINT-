@@ -2,20 +2,47 @@
     <header>
       <h1>Ask Question</h1>
     </header>
+
+    <div class="container" [formGroup]="askForm" (ngSubmit)="SubmitData()">
+      <form>
+        <div>
+          <label for="question">Question</label><br>
+          <input type="text"  id="question" name="question"f ormControlName="question">
+          <!-- <p *ngIf="askForm.get('question')!.touched">question is required</p> -->
+          <p *ngIf="askForm.get('question')!.touched && askForm.get('question')!.invalid">Please enter question</p>
+        </div>
+        <br>
+        <div>
+          <label for="body">Question body</label><br>
+          <!-- <input type="text" > -->
+          <textarea name="body" id="body" cols="30" rows="10" formControlName="body"></textarea>
+          <p *ngIf="askForm.get('body')!.touched && askForm.get('body')!.invalid">body is requred</p>
+        </div>
+        <br>
+       
+        <br>
+       
+        <br>
+        <br>
+        <div class="bottom-butttons">
+          <input type="submit" value="Ask question" [disabled]="!askForm.valid">
+          <br>
+        </div>
     
-    <main>
-      <form action="#" method="post">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required />
-
-        <label for="tags">Tags:</label>
-        <input type="text" id="tags" name="tags" required />
-
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea>
-
-        <input type="submit" value="Submit" />
       </form>
-    </main>
-  
+    </div>
+<!-- 
+    <main>
+      <form [formGroup]="askform" (ngSubmit)="SubmitData()" >
+        <label for="question">Question</label>
+        <input type="text" id="question" name="question" required formControlName="question" />
 
+        <label for="tags">Tag:</label>
+        <input type="text" id="tags" name="tags" required /> 
+
+        <label for="body">Body</label>
+        <textarea id="body" name="body" required formControlName="body"></textarea>
+
+        <input type="submit"  value="Submit" />
+      </form>
+    </main> -->
